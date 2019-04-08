@@ -8,7 +8,8 @@ type detail = {
   body: string;
 }
 
-export interface Item {
+export interface IShopItem {
+  id: string;
   name: string;
   price: number;
   makeshop_stock: number;
@@ -18,4 +19,17 @@ export interface Item {
   details: detail[];
 }
 
-export type Inventory = {id: string, item: Item}[]
+export interface IForm {
+  inputName: string;
+  inputPrice: string;
+  inputMstock: string;
+  inputRstock: string;
+  inputJancode: string;
+  inputDescriptions: { title: string, body: string }[];
+  inputDetails: { title: string, body: string }[];
+}
+
+export interface IOptionState {
+  form: IForm;
+  items: IShopItem[];
+}
