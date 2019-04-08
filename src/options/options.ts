@@ -1,26 +1,21 @@
-import { Inventory, Item } from '../inventory';
+import { IOptionState, IShopItem } from "../inventory";
 
-console.log('options');
-
-interface IOptions {
-  getLocalStorage: () => void;
-  updateItem: (id: string) => (inventory: Inventory) => Inventory;
-  addItem: (item: Item) => (inventory: Inventory) => Inventory;
-  removeItem: (id: string) => (inventory: Inventory) => Inventory;
+interface IOptionUpdate {
+  add: (item: IShopItem) => (state: IOptionState) => IOptionState;
+  delete: (id: string) => (state: IOptionState) => IOptionState;
+  edit: (id: string, item: IShopItem) => (state: IOptionState) => IOptionState;
 }
 
-const options: IOptions = {
-  getLocalStorage: () => {},
-
-  updateItem: id => inventory => {
-    return inventory;
+export const update: IOptionUpdate = {
+  add: item => state => {
+    return state;
   },
 
-  addItem: item => inventory => {
-    return inventory;
+  delete: id => state => {
+    return state;
   },
 
-  removeItem: id => inventory => {
-    return inventory;
+  edit: (id, item) => state => {
+    return state;
   }
 }
