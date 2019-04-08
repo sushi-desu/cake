@@ -2,8 +2,59 @@
 html(lang="ja")
   head
     meta(charset="UTF-8")
+    link(href="https://fonts.googleapis.com/css?family=Noto+Sans+JP", rel="stylesheet")
     style
+      include:clean-css ./skeleton.css
+      include:clean-css ./normalize.css
       include:clean-css:scss ./options.sass
     title Settings
+
   body
+    .sidebar
+      ul#itemlist
+    .form-box
+      h2 商品情報
+      form.form(class=['field'])
+        label(for="name") 商品名
+        input#name(type="text", name="name")
+
+        label(for="price") 値段(税抜き)
+        input#price(type="text", name="price")
+
+        label(for="weight") 重さ(g)
+        input#weight(type="text", name="weight")
+
+        label(for="rakuten_stock") 在庫数(楽天)
+        input#rakuten_stock(type="text", name="rakuten_stock")
+
+        label(for="makeshop_stock") 在庫数(とみクリ)
+        input#makeshop_stock(type="text", name="makeshop_stock")
+
+        label(for="jancode") JANコード
+        input#jancode(type="text", name="jancode")
+
+        div.descriptions-field
+          h4 商品説明
+          div.descriptions
+            div
+              label(for="desc1_title") タイトル
+              input#desc1_title(type="text", name="desc1_title")
+              label(for="desc1_body") 本文
+              input#desc1_body(type="text", name="desc1_body")
+          button.plus(type="button" class=['button is-light'])
+          button.minus(type="button" class=['button is-light'])
+
+        div.details-field
+          h4 商品詳細
+          div.details
+            div
+              label(for="detail1_title") タイトル
+              input#detail1_title(type="text", name="detail1_title")
+              label(for="detail1_body") 内容
+              input#detail1_body(type="text", name="detail1_body")
+          button.plus(type="button" class=['button is-light'])
+          button.minus(type="button" class=['button is-light'])
+
+        button 保存
+
     script(src="options.js")

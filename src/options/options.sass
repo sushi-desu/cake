@@ -1,2 +1,47 @@
 body
   margin: 0
+  font-family: 'Noto Sans JP', sans-serif
+  background-color: #f7f7f7
+
+.form-box
+  max-width: 500px
+  margin: auto
+  padding: 50px
+  background: #ffffff
+  border-radius: 20px
+  box-shadow: 4px 3px 7px 2px #e4e4e4
+
+h2
+  text-align: center
+  font-size: 3.2rem
+
+h4
+  font-size: 2.3rem
+
+
+textarea
+  min-height: 120px
+
+
+.plus,
+.minus
+  position: relative
+  width: 36px
+  height: 36px
+  padding: inherit
+
+.plus::before,
+.minus::before
+  font-size: 24px
+  line-height: 24px
+  position: absolute
+
+.plus::before
+  content: '+'
+  top: 4px
+  left: 10px
+
+.minus::before
+  content: '-'
+  top: 2px
+  left: 12.5px
