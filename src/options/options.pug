@@ -35,26 +35,28 @@ html(lang="ja")
 
         div.descriptions-field
           h4 商品説明
-          div.descriptions
-            div
-              label(for="desc1_title") タイトル
-              input#desc1_title(type="text", name="desc1_title")
-              label(for="desc1_body") 本文
-              input#desc1_body(type="text", name="desc1_body")
+          div#descriptions
+            div.description_1
+              span タイトル
+              input(name="title")
+              span 本文
+              input(name="body")
           button.plus(type="button" class=['button is-light'])
           button.minus(type="button" class=['button is-light'])
 
         div.details-field
           h4 商品詳細
-          div.details
-            div
-              label(for="detail1_title") タイトル
-              input#detail1_title(type="text", name="detail1_title")
-              label(for="detail1_body") 内容
-              input#detail1_body(type="text", name="detail1_body")
+          div#details
+            div.detail_1
+              span タイトル
+              input(name="title")
+              span 内容
+              input(name="body")
           button.plus(type="button" class=['button is-light'])
           button.minus(type="button" class=['button is-light'])
 
-        button 保存
+        button#save 保存
+        button#new 新規として登録
+        button#delete 削除
 
     script(src="options.js")
