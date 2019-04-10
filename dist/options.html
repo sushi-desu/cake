@@ -13,7 +13,7 @@
     </div>
     <div class="form-box">
       <h2>商品情報</h2>
-      <form class="form field">
+      <form class="field" id="form">
         <label for="name">商品名</label>
         <input id="name" type="text" name="name"/>
         <label for="price">値段(税抜き)</label>
@@ -28,12 +28,10 @@
         <input id="jancode" type="text" name="jancode"/>
         <div class="descriptions-field">
           <h4>商品説明</h4>
-          <div class="descriptions">
-            <div>
-              <label for="desc1_title">タイトル</label>
-              <input id="desc1_title" type="text" name="desc1_title"/>
-              <label for="desc1_body">本文</label>
-              <input id="desc1_body" type="text" name="desc1_body"/>
+          <div id="descriptions">
+            <div class="description"><span>タイトル</span>
+              <input type="text" name="description_title"/><span>本文</span>
+              <textarea name="description_body" cols="30" rows="10"></textarea>
             </div>
           </div>
           <button class="plus button is-light" type="button"></button>
@@ -41,18 +39,18 @@
         </div>
         <div class="details-field">
           <h4>商品詳細</h4>
-          <div class="details">
-            <div>
-              <label for="detail1_title">タイトル</label>
-              <input id="detail1_title" type="text" name="detail1_title"/>
-              <label for="detail1_body">内容</label>
-              <input id="detail1_body" type="text" name="detail1_body"/>
+          <div id="details">
+            <div class="detail"><span>タイトル</span>
+              <input type="text" name="detail_title"/><span>内容</span>
+              <input type="text" name="detail_body"/>
             </div>
           </div>
           <button class="plus button is-light" type="button"></button>
           <button class="minus button is-light" type="button"></button>
         </div>
-        <button>保存</button>
+        <button id="save" type="button">保存</button>
+        <button id="new" type="button">新規として登録</button>
+        <button id="delete" type="button">削除</button>
       </form>
     </div>
     <script src="options.js"></script>

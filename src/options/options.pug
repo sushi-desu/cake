@@ -14,7 +14,7 @@ html(lang="ja")
       ul#itemlist
     .form-box
       h2 商品情報
-      form.form(class=['field'])
+      form#form(class=['field'])
         label(for="name") 商品名
         input#name(type="text", name="name")
 
@@ -36,27 +36,27 @@ html(lang="ja")
         div.descriptions-field
           h4 商品説明
           div#descriptions
-            div.description_1
+            div.description
               span タイトル
-              input(name="title")
+              input(type="text", name="description_title")
               span 本文
-              input(name="body")
+              textarea(name="description_body", cols="30", rows="10")
           button.plus(type="button" class=['button is-light'])
           button.minus(type="button" class=['button is-light'])
 
         div.details-field
           h4 商品詳細
           div#details
-            div.detail_1
+            div.detail
               span タイトル
-              input(name="title")
+              input(type="text", name="detail_title")
               span 内容
-              input(name="body")
+              input(type="text", name="detail_body")
           button.plus(type="button" class=['button is-light'])
           button.minus(type="button" class=['button is-light'])
 
-        button#save 保存
-        button#new 新規として登録
-        button#delete 削除
+        button#save(type="button") 保存
+        button#new(type="button") 新規として登録
+        button#delete(type="button") 削除
 
     script(src="options.js")
