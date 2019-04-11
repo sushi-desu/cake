@@ -1,4 +1,5 @@
 import { Model } from "./model";
+import { empty } from "./util";
 
 export const setSidebarEventListener = (model: Model): void => {
 
@@ -29,11 +30,5 @@ export const setSidebarEventListener = (model: Model): void => {
 
       itemlist.appendChild(li);
     });
-  }
-
-  const empty = (target: HTMLElement): void => {
-    while (target.firstChild) {
-      target.removeChild(target.firstChild);
-    }
   }
 }
