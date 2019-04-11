@@ -1,21 +1,12 @@
-type description = {
-  title: string;
-  body: string;
-}
-
-type detail = {
-  title: string;
-  body: string;
-}
 
 export interface IShopItem {
   id: string;
   name: string;
-  price: number;
-  weight: number;
-  makeshop_stock: number;
-  rakuten_stock: number;
+  price: string;
+  weight: string;
+  makeshop_stock: string;
+  rakuten_stock: string;
   jancode: string;
-  descriptions: description[];
-  details: detail[];
+  descriptions: { title: string, body: string }[];
+  details: { title: string, body: string }[];
 }
