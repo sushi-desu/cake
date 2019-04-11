@@ -73,9 +73,13 @@ export class Model {
       rakuten_stock: form.get('rakuten_stock').toString(),
       makeshop_stock: form.get('makeshop_stock').toString(),
       jancode: form.get('jancode').toString(),
-      descriptions: [],
-      details: []
+      descriptions: this.convert('description', form),
+      details: this.convert('detail', form)
     }
+  }
+
+  private convert = (type: 'description' | 'detail', form: FormData): {title: string, body: string}[] => {
+
   }
 }
 
