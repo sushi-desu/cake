@@ -31,4 +31,8 @@ export const setSidebarEventListener = (model: Model): void => {
       itemlist.appendChild(li);
     });
   }
+
+
+  // init
+  renderItemlist();
 }
