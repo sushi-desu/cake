@@ -69,11 +69,11 @@ export class Model {
     return {
       id: id,
       name: form.get('name').toString(),
-      price: 0,
-      weight: 0,
-      rakuten_stock: 0,
-      makeshop_stock: 0,
-      jancode: '',
+      price: form.get('price').toString(),
+      weight: form.get('weight').toString(),
+      rakuten_stock: form.get('rakuten_stock').toString(),
+      makeshop_stock: form.get('makeshop_stock').toString(),
+      jancode: form.get('jancode').toString(),
       descriptions: [],
       details: []
     }
