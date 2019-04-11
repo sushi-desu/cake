@@ -8,6 +8,7 @@ export const setMainEventListener = (model: Model): void => {
   model.dispatcher.addEventListener('selectChange', () => {
     console.log('selectChange');
     const item = model.getSelectedItem();
+    console.log(item);
     initForm(item);
   })
 

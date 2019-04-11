@@ -55,7 +55,6 @@ export class Model {
     }
 
     this.dispatcher.dispatchEvent(this._datachange);
-    console.log(this._id);
     console.log(this._itemList);
   }
 
