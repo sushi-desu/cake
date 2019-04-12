@@ -30,19 +30,19 @@ export const setMainEventListener = (model: Model): void => {
     model.updateItem("delete");
   });
 
-  document.querySelector('.descriptions-field > button.plus').addEventListener('click', () => {
+  document.querySelector('.descriptions-field button.plus').addEventListener('click', () => {
     addDescriptionForm();
   });
 
-  document.querySelector('.descriptions-field > button.minus').addEventListener('click', () => {
+  document.querySelector('.descriptions-field button.minus').addEventListener('click', () => {
     removeDescriptionForm();
   });
 
-  document.querySelector('.details-field > button.plus').addEventListener('click', () => {
+  document.querySelector('.details-field button.plus').addEventListener('click', () => {
     addDetailsForm();
   });
 
-  document.querySelector('.details-field > button.minus').addEventListener('click', () => {
+  document.querySelector('.details-field button.minus').addEventListener('click', () => {
     removeDetailsForm();
   });
 
@@ -82,10 +82,16 @@ export const setMainEventListener = (model: Model): void => {
     const div = document.createElement('div')
     div.classList.add('description');
     div.innerHTML = `
-      <span>タイトル</span>
-      <input type="text" name="description_title">
-      <span>本文</span>
-      <textarea name="description_body" cols="30" rows="10"></textarea>`;
+      <div class="field">
+        <span class="label">タイトル</span>
+        <div class="control">
+          <input class="input" type="text" name="description_title">
+        </div>
+        <span class="label">本文</span>
+        <div class="control">
+          <textarea class="textarea" name="description_body"></textarea>
+        </div>
+      </div>`;
 
     descs.appendChild(div);
     return div;
@@ -103,10 +109,20 @@ export const setMainEventListener = (model: Model): void => {
     const div = document.createElement('div');
     div.classList.add('detail');
     div.innerHTML = `
-      <span>タイトル</span>
-      <input type="text" name="detail_title">
-      <span>内容</span>
-      <input type="text" name="detail_body">`;
+      <div class="columns is-mobile">
+        <div class="column is-one-third">
+          <div class="field">
+            <span>タイトル</span>
+            <input class="input" type="text" name="detail_title">
+          </div>
+        </div>
+        <div class="column">
+          <div class="field">
+            <span>内容</span>
+            <input class="input" type="text" name="detail_body">
+          </div>
+        </div>
+      </div>`;
 
     details.appendChild(div);
     return div;

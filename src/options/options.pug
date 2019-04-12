@@ -3,65 +3,104 @@ html(lang="ja")
   head
     meta(charset="UTF-8")
     link(href="https://fonts.googleapis.com/css?family=Noto+Sans+JP", rel="stylesheet")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css", rel="stylesheet")
     style
-      include:clean-css ./normalize.css
-      include:clean-css ./skeleton.css
+      //- include:clean-css ./normalize.css
+      //- include:clean-css ./skeleton.css
       include:clean-css:scss ./options.sass
     title Settings
 
   body
-    .sidebar
-      ul#itemlist
-    .form-box
-      h2 商品情報
-      form#form(class=['field'])
-        label(for="name") 商品名
-        input#name(type="text", name="name")
+    section.main-content.columns.is-mobile.is-fullheight
 
-        label(for="price") 値段(税抜き)
-        input#price(type="text", name="price")
+      aside.menu.column.is-one-third.is-narrow-mobile.is-fullheight.section
+        p.menu-label Item List
+        ul.menu-list#itemlist
 
-        label(for="weight") 重さ(g)
-        input#weight(type="text", name="weight")
+      .form-box.container.column
+        h1.title.is-5 商品情報
+        form#form
+          .columns.is-mobile
+            .column
+              .field
+                label(for="name", class=['label']) 商品名
+                .control
+                  input#name(type="text", name="name", class=['input'])
 
-        label(for="rakuten_stock") 在庫数(楽天)
-        input#rakuten_stock(type="text", name="rakuten_stock")
+          .columns.is-mobile
+            .column
+              .field
+                label(for="price", class=['label']) 値段(税抜き)
+                .control
+                  input#price(type="text", name="price", class=['input'])
+            .column
+              .field
+                label(for="weight", class=['label']) 重さ(g)
+                .control
+                  input#weight(type="text", name="weight", class=['input'])
 
-        label(for="makeshop_stock") 在庫数(とみクリ)
-        input#makeshop_stock(type="text", name="makeshop_stock")
+          .columns.is-mobile
+            .column
+              .field
+                label(for="rakuten_stock", class=['label']) 在庫数(楽天)
+                .control
+                  input#rakuten_stock(type="text", name="rakuten_stock", class=['input'])
 
-        label(for="jancode") JANコード
-        input#jancode(type="text", name="jancode")
+            .column
+              .field
+                label(for="makeshop_stock", class=['label']) 在庫数(とみクリ)
+                .control
+                  input#makeshop_stock(type="text", name="makeshop_stock", class=['input'])
 
-        hr
+          .columns.is-mobile
+            .column.is-half
+              .field
+                label(for="jancode", class=['label']) JANコード
+                .control
+                  input#jancode(type="text", name="jancode", class=['input'])
 
-        div.descriptions-field
-          h4 商品説明
-          div#descriptions
-            div.description
-              span タイトル
-              input(type="text", name="description_title")
-              span 本文
-              textarea(name="description_body", cols="30", rows="10")
-          button.plus(type="button" class=['button is-light'])
-          button.minus(type="button" class=['button is-light'])
+          hr
 
-        hr
+          div.descriptions-field
+            h2.subtitle 商品説明
+            div#descriptions
+              div.description
+                span タイトル
+                input(type="text", name="description_title")
+                span 本文
+                textarea(name="description_body", cols="30", rows="10")
+            .field.is-grouped
+              .control
+                button.plus(type="button" class=['button is-light'])
+              .control
+                button.minus(type="button" class=['button is-light'])
 
-        div.details-field
-          h4 商品詳細
-          div#details
-            div.detail
-              span タイトル
-              input(type="text", name="detail_title")
-              span 内容
-              input(type="text", name="detail_body")
-          button.plus(type="button" class=['button is-light'])
-          button.minus(type="button" class=['button is-light'])
+          hr
 
-        div.control
-          button#save(type="button") 保存
-          button#new(type="button") 新規として登録
-          button#delete(type="button") 削除
+          div.details-field
+            h2.subtitle 商品詳細
+            div#details
+              div.detail
+                span タイトル
+                input(type="text", name="detail_title")
+                span 内容
+                input(type="text", name="detail_body")
+            .field.is-grouped
+              .control
+                button.plus(type="button" class=['button is-light'])
+              .control
+                button.minus(type="button" class=['button is-light'])
+
+          .level.is-mobile
+            .level-left
+              .field.is-grouped
+                .control
+                  button#save(type="button" class=['button is-info']) 保存
+                .control
+                  button#new(type="button" class=['button']) 新規として登録
+            .level-right
+              .field
+                .control
+                  button#delete(type="button" class=['button']) 削除
 
     script(src="options.js")

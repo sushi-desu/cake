@@ -12,7 +12,7 @@ export const setSidebarEventListener = (model: Model): void => {
 
   itemlist.addEventListener('click', (e: Event) => {
     const target: EventTarget | null = e.target;
-    if (target && target instanceof HTMLLIElement) {
+    if (target && target instanceof HTMLAnchorElement) {
       const id = target.getAttribute('itemid');
       model.select(id);
     }
@@ -25,9 +25,11 @@ export const setSidebarEventListener = (model: Model): void => {
 
     model.getTitleList().forEach(item => {
       const li = document.createElement('li');
-      li.setAttribute('itemid', item.id);
-      li.innerText = item.title;
+      const a = document.createElement('a');
+      a.setAttribute('itemid', item.id);
+      a.innerText = item.title;
 
+      li.appendChild(a);
       itemlist.appendChild(li);
     });
   }
