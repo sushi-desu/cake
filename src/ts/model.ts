@@ -1,5 +1,6 @@
 import { getLocalStorage, lastSelectedId } from "./chromeApi";
 import { IShopItem } from "./item";
+import { zip } from "./util"
 
 export class Model {
 
@@ -42,9 +43,9 @@ export class Model {
 
     } else if (type === "new") {
 
-      this._itemList.push(
-        this.form_to_item(this.uniqueId(), form)
-      );
+      const newid = this.uniqueId();
+      this._itemList.push( this.form_to_item(newid, form) );
+      this.select(newid);
 
     } else if (type === "delete") {
 
@@ -52,6 +53,7 @@ export class Model {
       if (index === -1) { alert('no index'); }
 
       this._itemList.splice(index, 1);
+      this.select(this._itemList[index-1].id);
     }
 
     this.dispatcher.dispatchEvent(this._datachange);
@@ -79,7 +81,15 @@ export class Model {
   }
 
   private convert = (type: 'description' | 'detail', form: FormData): {title: string, body: string}[] => {
+    const titles = form.getAll(`${ type }_title`);
+    const bodies = form.getAll(`${ type }_body`);
 
+    // 入力欄が存在しない、または空欄の場合は空のリストを返す
+    if ( (titles.length === 0) || (titles[0] === "") ) {
+      return [];
+    }
+
+    return zip((t, b) => ({title: t.toString(), body: b.toString()}), titles, bodies);
   }
 }
 
