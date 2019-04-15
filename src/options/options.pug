@@ -4,6 +4,7 @@ html(lang="ja")
     meta(charset="UTF-8")
     link(href="https://fonts.googleapis.com/css?family=Noto+Sans+JP", rel="stylesheet")
     link(href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css", rel="stylesheet")
+    link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.8.1/css/all.css", integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf", crossorigin="anonymous")
     style
       //- include:clean-css ./normalize.css
       //- include:clean-css ./skeleton.css
@@ -11,65 +12,65 @@ html(lang="ja")
     title Settings
 
   body
-    section.main-content.columns.is-mobile.is-fullheight
+    section.section.columns.is-mobile.is-fullheight.is-centered
 
-      aside.menu.column.is-one-third.is-narrow-mobile.is-fullheight.section
-        p.menu-label Item List
-        ul.menu-list#itemlist
+      .container.column.is-3.is-narrow-mobile.is-fullheight
+        aside.menu
+          p.menu-label Item List
+          ul.menu-list#itemlist
 
-      .form-box.container.column
-        h1.title.is-5 商品情報
+      .column.is-1.is-hidden-touch
+
+      .container.column
         form#form
-          .columns.is-mobile
-            .column
-              .field
-                label(for="name", class=['label']) 商品名
-                .control
-                  input#name(type="text", name="name", class=['input'])
+          .field.padding-bottom
+            label(for="name", class=['label']) 商品名
+            .control
+              input#name(type="text", name="name", class=['input'])
 
-          .columns.is-mobile
+          .columns.is-variable.is-0-mobile.is-1-tablet.is-1-desktop
             .column
-              .field
-                label(for="price", class=['label']) 値段(税抜き)
-                .control
-                  input#price(type="text", name="price", class=['input'])
-            .column
-              .field
-                label(for="weight", class=['label']) 重さ(g)
-                .control
-                  input#weight(type="text", name="weight", class=['input'])
-
-          .columns.is-mobile
-            .column
-              .field
-                label(for="rakuten_stock", class=['label']) 在庫数(楽天)
-                .control
-                  input#rakuten_stock(type="text", name="rakuten_stock", class=['input'])
+              .columns.is-variable.is-1.is-mobile
+                .column.field
+                  label(for="price", class=['label']) 値段(税抜き)
+                  .control
+                    input#price(type="text", name="price", class=['input'])
+                .column.field
+                  label(for="weight", class=['label']) 重さ(g)
+                  .control
+                    input#weight(type="text", name="weight", class=['input'])
 
             .column
-              .field
-                label(for="makeshop_stock", class=['label']) 在庫数(とみクリ)
-                .control
-                  input#makeshop_stock(type="text", name="makeshop_stock", class=['input'])
+              .columns.is-variable.is-1.is-mobile
+                .column.field
+                  label(for="rakuten_stock", class=['label']) 在庫数(楽天)
+                  .control
+                    input#rakuten_stock(type="text", name="rakuten_stock", class=['input'])
+                .column.field
+                  label(for="makeshop_stock", class=['label']) (とみクリ)
+                  .control
+                    input#makeshop_stock(type="text", name="makeshop_stock", class=['input'])
 
-          .columns.is-mobile
-            .column.is-half
-              .field
-                label(for="jancode", class=['label']) JANコード
-                .control
-                  input#jancode(type="text", name="jancode", class=['input'])
+          .columns
+            .column.is-half.field
+              label(for="jancode", class=['label']) JANコード
+              .control.has-icons-right
+                input#jancode(type="text", name="jancode", class=['input'])
+                span.icon.is-small.is-right
+                  i(class=["fas fa-exclamation-triangle"])
+              p.help ok
 
           hr
 
           div.descriptions-field
             h2.subtitle 商品説明
-            div#descriptions
+            div#descriptions(class=['padding-bottom'])
               div.description
                 span タイトル
                 input(type="text", name="description_title")
                 span 本文
                 textarea(name="description_body", cols="30", rows="10")
-            .field.is-grouped
+            .field.is-grouped.is-grouped-right
               .control
                 button.plus(type="button" class=['button is-light'])
               .control
@@ -79,17 +80,19 @@ html(lang="ja")
 
           div.details-field
             h2.subtitle 商品詳細
-            div#details
+            div#details(class=['padding-bottom'])
               div.detail
                 span タイトル
                 input(type="text", name="detail_title")
                 span 内容
                 input(type="text", name="detail_body")
-            .field.is-grouped
+            .field.is-grouped.is-grouped-right
               .control
                 button.plus(type="button" class=['button is-light'])
               .control
                 button.minus(type="button" class=['button is-light'])
+
+          hr
 
           .level.is-mobile
             .level-left
@@ -102,5 +105,7 @@ html(lang="ja")
               .field
                 .control
                   button#delete(type="button" class=['button']) 削除
+
+      .column.is-1.is-hidden-touch
 
     script(src="options.js")

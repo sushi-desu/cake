@@ -10,20 +10,25 @@ body
 //   border-radius: 20px
 //   box-shadow: 4px 3px 7px 2px #e4e4e4
 
-h1,h2
+.padding-bottom
+  padding-bottom: 0.75rem
+
+h2
   text-align: center
 
 textarea
   min-height: 120px
 
-.description > span,
-.detail > span
-  display: block
+#descriptions .description:not(:last-of-type)
+  margin-bottom: 1.8rem
 
 #details .detail:nth-of-type(n+2)
-  span
+  .label
     display: none
 
+#details
+  .field
+    text-align: center
 
 .plus,
 .minus

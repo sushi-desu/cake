@@ -80,17 +80,15 @@ export const setMainEventListener = (model: Model): void => {
     const descs = document.getElementById('descriptions');
 
     const div = document.createElement('div')
-    div.classList.add('description');
+    div.classList.add('description', 'field');
     div.innerHTML = `
-      <div class="field">
-        <span class="label">タイトル</span>
-        <div class="control">
-          <input class="input" type="text" name="description_title">
-        </div>
-        <span class="label">本文</span>
-        <div class="control">
-          <textarea class="textarea" name="description_body"></textarea>
-        </div>
+      <span class="label">タイトル</span>
+      <div class="control">
+        <input class="input" type="text" name="description_title">
+      </div>
+      <span class="label">本文</span>
+      <div class="control">
+        <textarea class="textarea" name="description_body"></textarea>
       </div>`;
 
     descs.appendChild(div);
@@ -112,13 +110,13 @@ export const setMainEventListener = (model: Model): void => {
       <div class="columns is-mobile">
         <div class="column is-one-third">
           <div class="field">
-            <span>タイトル</span>
+            <span class="label">タイトル</span>
             <input class="input" type="text" name="detail_title">
           </div>
         </div>
         <div class="column">
           <div class="field">
-            <span>内容</span>
+            <span class="label">内容</span>
             <input class="input" type="text" name="detail_body">
           </div>
         </div>
