@@ -1,6 +1,6 @@
 import { getLocalStorage, lastSelectedId } from "./chromeApi";
 import { IShopItem } from "./item";
-import { zip } from "./util"
+import { zip, uniqueId } from "./util"
 
 export class Model {
 
@@ -43,7 +43,7 @@ export class Model {
 
     } else if (type === "new") {
 
-      const newid = this.uniqueId();
+      const newid = uniqueId();
       this._itemList.push( this.form_to_item(newid, form) );
       this.select(newid);
 
@@ -61,10 +61,6 @@ export class Model {
   }
 
 
-
-  private uniqueId = (): string => {
-    return Math.random().toString(34).slice(2);
-  }
 
   private form_to_item = (id: string, form: FormData): IShopItem => {
     return {
