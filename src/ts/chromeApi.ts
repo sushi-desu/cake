@@ -1,8 +1,9 @@
 import { IShopItem } from "./item";
+import { uniqueId } from "./util"
 
 export const getLocalStorage = (): IShopItem[] => {
   // TEST
-  return [
+  const sample = [
     {
       id: 'hogehoge',
       name: '松尾ミユキ ミルクガラス皿 ねこ',
@@ -24,8 +25,56 @@ export const getLocalStorage = (): IShopItem[] => {
       jancode: '010002555555',
       descriptions: [{ title: 'おすすめ商品', body: '木でできたプレートです。'}, {title: '特徴的な色', body: '味わい深い色です。'}],
       details: []
+    },
+    {
+      id: 'test3',
+      name: '適当な商品',
+      price: '200',
+      weight: '120',
+      rakuten_stock: '2',
+      makeshop_stock: '4',
+      jancode: '010002555555',
+      descriptions: [{ title: 'おすすめ商品', body: '木でできたプレートです。' }, { title: '特徴的な色', body: '味わい深い色です。' }],
+      details: []
+    },
+    {
+      id: 'test4',
+      name: '本棚',
+      price: '200',
+      weight: '120',
+      rakuten_stock: '2',
+      makeshop_stock: '4',
+      jancode: '010002555555',
+      descriptions: [{ title: 'おすすめ商品', body: '木でできたプレートです。' }, { title: '特徴的な色', body: '味わい深い色です。' }],
+      details: []
+    },
+    {
+      id: 'test5',
+      name: 'がんこほんぽ タワシ',
+      price: '200',
+      weight: '120',
+      rakuten_stock: '2',
+      makeshop_stock: '4',
+      jancode: '010002555555',
+      descriptions: [{ title: 'おすすめ商品', body: '木でできたプレートです。' }, { title: '特徴的な色', body: '味わい深い色です。' }],
+      details: []
     }
-  ]
+  ];
+
+  return sample.concat(Array(100).fill(0).map((e, i) => {
+    const n = sample[i%5];
+    return {
+      id: uniqueId(),
+      name: n.name,
+      price: n.price,
+      weight: n.weight,
+      rakuten_stock: n.rakuten_stock,
+      makeshop_stock: n.makeshop_stock,
+      jancode: n.jancode,
+      descriptions: n.descriptions,
+      details: n.details
+    }
+  }));
 }
 
 export const lastSelectedId = (): string => {
