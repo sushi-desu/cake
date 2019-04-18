@@ -3,11 +3,15 @@ import { empty } from "./util";
 
 export const setSidebarEventListener = (model: Model): void => {
 
-  const itemlist = document.getElementById('itemlist');
+  const itemlist = document.getElementById('itemlist') as HTMLUListElement;
 
   model.dispatcher.addEventListener('dataChange', () => {
     console.log('datachange');
     renderItemlist();
+  });
+
+  model.dispatcher.addEventListener('selectChange', () => {
+    highlightSelectedItem(model.getSelectedItem().id);
   });
 
   itemlist.addEventListener('click', (e: Event) => {
@@ -32,6 +36,17 @@ export const setSidebarEventListener = (model: Model): void => {
       li.appendChild(a);
       itemlist.appendChild(li);
     });
+  }
+
+  const highlightSelectedItem = (id: string): void => {
+    // clear highlight
+    const pre_selected_li = itemlist.querySelectorAll('.is-active');
+    pre_selected_li.forEach(li => {
+      li.classList.remove('is-active');
+    });
+
+    const selected_li = itemlist.querySelector(`[itemid="${id}"]`);
+    selected_li.classList.add('is-active');
   }
 
 
