@@ -7,3 +7,6 @@ const model = new Model();
 
 setMainEventListener(model);
 setSidebarEventListener(model);
+
+// initialize
+model.dispatchEvents();

@@ -60,6 +60,11 @@ export class Model {
     console.log(this._itemList);
   }
 
+  dispatchEvents = (): void => {
+    this.dispatcher.dispatchEvent(this._datachange);
+    this.dispatcher.dispatchEvent(this._selectchange);
+  }
+
 
 
   private form_to_item = (id: string, form: FormData): IShopItem => {

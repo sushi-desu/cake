@@ -1,13 +1,13 @@
 import { Model } from "./model";
 import { empty } from "./util";
 
-export const setSidebarEventListener = (model: Model): void => {
+const itemlist = document.getElementById('itemlist') as HTMLUListElement;
 
-  const itemlist = document.getElementById('itemlist') as HTMLUListElement;
+export const setSidebarEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('dataChange', () => {
     console.log('datachange');
-    renderItemlist();
+    renderItemlist(model.getTitleList());
   });
 
   model.dispatcher.addEventListener('selectChange', () => {
@@ -22,34 +22,30 @@ export const setSidebarEventListener = (model: Model): void => {
     }
   });
 
+}
 
 
-  const renderItemlist = (): void => {
-    empty(itemlist);
+const renderItemlist = (titlelist: {title: string, id: string}[]): void => {
+  empty(itemlist);
 
-    model.getTitleList().forEach(item => {
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.setAttribute('itemid', item.id);
-      a.innerText = item.title;
+  titlelist.forEach(item => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.setAttribute('itemid', item.id);
+    a.innerText = item.title;
 
-      li.appendChild(a);
-      itemlist.appendChild(li);
-    });
-  }
+    li.appendChild(a);
+    itemlist.appendChild(li);
+  });
+}
 
-  const highlightSelectedItem = (id: string): void => {
-    // clear highlight
-    const pre_selected_li = itemlist.querySelectorAll('.is-active');
-    pre_selected_li.forEach(li => {
-      li.classList.remove('is-active');
-    });
+const highlightSelectedItem = (id: string): void => {
+  // clear highlight
+  const pre_selected_li = itemlist.querySelectorAll('.is-active');
+  pre_selected_li.forEach(li => {
+    li.classList.remove('is-active');
+  });
 
-    const selected_li = itemlist.querySelector(`[itemid="${id}"]`);
-    selected_li.classList.add('is-active');
-  }
-
-
-  // init
-  renderItemlist();
+  const selected_li = itemlist.querySelector(`[itemid="${id}"]`);
+  selected_li.classList.add('is-active');
 }
