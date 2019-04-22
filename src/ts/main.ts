@@ -5,6 +5,9 @@ import { empty } from "./util";
 const form = document.getElementById('form') as HTMLFormElement;
 const descriptions = document.getElementById('descriptions');
 const details = document.getElementById('details');
+const savebtn = document.getElementById('save') as HTMLButtonElement;
+const newbtn = document.getElementById('new') as HTMLButtonElement;
+const deletebtn = document.getElementById('delete') as HTMLButtonElement;
 
 export const setMainEventListener = (model: Model): void => {
 
@@ -13,17 +16,21 @@ export const setMainEventListener = (model: Model): void => {
     initForm(item);
   })
 
-  document.getElementById('save').addEventListener('click', () => {
+  form.addEventListener('input', () => {
+
+  });
+
+  savebtn.addEventListener('click', () => {
     const data = new FormData(form);
     model.update(data);
   });
 
-  document.getElementById('new').addEventListener('click', () => {
+  newbtn.addEventListener('click', () => {
     const data = new FormData(form);
     model.new(data);
   });
 
-  document.getElementById('delete').addEventListener('click', () => {
+  deletebtn.addEventListener('click', () => {
     model.delete();
   });
 
@@ -74,8 +81,6 @@ const initForm = (item: IShopItem): void => {
 }
 
 const addDescriptionForm = () => {
-  const descs = document.getElementById('descriptions');
-
   const div = document.createElement('div')
   div.classList.add('description', 'field');
   div.innerHTML = `
@@ -88,7 +93,7 @@ const addDescriptionForm = () => {
         <textarea class="textarea" name="description_body"></textarea>
       </div>`;
 
-  descs.appendChild(div);
+  descriptions.appendChild(div);
   return div;
 }
 
@@ -100,7 +105,6 @@ const removeDescriptionForm = () => {
 }
 
 const addDetailsForm = () => {
-  const details = document.getElementById('details');
   const div = document.createElement('div');
   div.classList.add('detail');
   div.innerHTML = `
