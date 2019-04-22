@@ -14,16 +14,11 @@ export const setMainEventListener = (model: Model): void => {
   model.dispatcher.addEventListener('selectChange', () => {
     const item = model.getSelectedItem();
     initForm(item);
+    validation();
   })
 
   form.addEventListener('input', () => {
-    if (is_valid(form)) {
-      savebtn.disabled = false;
-      newbtn.disabled = false;
-    } else {
-      savebtn.disabled = true;
-      newbtn.disabled = true;
-    }
+    validation();
   });
 
   savebtn.addEventListener('click', () => {
@@ -58,6 +53,15 @@ export const setMainEventListener = (model: Model): void => {
 
 }
 
+const validation = (): void => {
+  if (is_valid(form)) {
+    savebtn.disabled = false;
+    newbtn.disabled = false;
+  } else {
+    savebtn.disabled = true;
+    newbtn.disabled = true;
+  }
+}
 
 const is_valid = (form: HTMLFormElement): boolean => {
   return form.checkValidity();
