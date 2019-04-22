@@ -40,11 +40,13 @@ export class Model {
       if (index === -1) { alert('no index'); }
 
       this._itemList[index] = this.form_to_item(this._id, form);
+      this.dispatcher.dispatchEvent(this._datachange);
 
     } else if (type === "new") {
 
       const newid = uniqueId();
       this._itemList.push( this.form_to_item(newid, form) );
+      this.dispatcher.dispatchEvent(this._datachange);
       this.select(newid);
 
     } else if (type === "delete") {
@@ -52,11 +54,11 @@ export class Model {
       const index = this._itemList.findIndex(item => item.id === this._id)
       if (index === -1) { alert('no index'); }
 
-      this._itemList.splice(index, 1);
+      this._itemList = this._itemList.filter( item => item.id !== this._id );
+      this.dispatcher.dispatchEvent(this._datachange);
       this.select(this._itemList[index-1].id);
     }
 
-    this.dispatcher.dispatchEvent(this._datachange);
     console.log(this._itemList);
   }
 
