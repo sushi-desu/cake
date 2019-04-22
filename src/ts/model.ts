@@ -58,7 +58,14 @@ export class Model {
 
       this._itemList = this._itemList.filter( item => item.id !== this._id );
       this.dispatcher.dispatchEvent(this._datachange);
-      this.select(null);
+
+      if (this._itemList.length === 0) {
+        this.select(null); // リストが空の場合は空のアイテムを選択
+      } else if (index > 0) {
+        this.select(this._itemList[index-1].id); // それ以外は一つ前のアイテムを選択
+      } else {
+        this.select(this._itemList[0].id); // 先頭が削除された場合は先頭のアイテムを選択
+      }
     }
 
     console.log(this._itemList);
