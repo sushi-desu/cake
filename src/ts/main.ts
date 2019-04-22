@@ -17,7 +17,13 @@ export const setMainEventListener = (model: Model): void => {
   })
 
   form.addEventListener('input', () => {
-
+    if (is_valid(form)) {
+      savebtn.disabled = false;
+      newbtn.disabled = false;
+    } else {
+      savebtn.disabled = true;
+      newbtn.disabled = true;
+    }
   });
 
   savebtn.addEventListener('click', () => {
@@ -50,6 +56,11 @@ export const setMainEventListener = (model: Model): void => {
     removeDetailsForm();
   });
 
+}
+
+
+const is_valid = (form: HTMLFormElement): boolean => {
+  return form.checkValidity();
 }
 
 const initForm = (item: IShopItem): void => {
