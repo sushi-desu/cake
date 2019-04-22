@@ -5,7 +5,7 @@ import { zip, uniqueId } from "./util"
 export class Model {
 
   private _itemList: IShopItem[];
-  private _id: string;
+  private _id: string | null;
   dispatcher: HTMLDivElement;
   private _datachange: Event;
   private _selectchange: Event;
@@ -24,10 +24,12 @@ export class Model {
   }
 
   getSelectedItem = (): IShopItem => {
-    return this._itemList.find(item => item.id === this._id);
+    return this._id === null
+      ? {id: "", name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      : this._itemList.find(item => item.id === this._id);
   }
 
-  select = (id: string): void => {
+  select = (id: string | null): void => {
     this._id = id;
     this.dispatcher.dispatchEvent(this._selectchange);
   }
@@ -56,7 +58,7 @@ export class Model {
 
       this._itemList = this._itemList.filter( item => item.id !== this._id );
       this.dispatcher.dispatchEvent(this._datachange);
-      this.select(this._itemList[index-1].id);
+      this.select(null);
     }
 
     console.log(this._itemList);
