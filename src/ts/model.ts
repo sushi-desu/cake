@@ -5,7 +5,7 @@ import { zip, uniqueId } from "./util"
 export class Model {
 
   private _itemList: IShopItem[];
-  private _id: string;
+  private _id: string | null;
   dispatcher: HTMLDivElement;
   private _datachange: Event;
   private _selectchange: Event;
@@ -16,6 +16,15 @@ export class Model {
     this.dispatcher = document.createElement('div');
     this._datachange = new Event('dataChange');
     this._selectchange = new Event('selectChange');
+
+    this.dispatcher.addEventListener('dataChange', () => {
+      console.log('dataChange');
+      console.log(this._itemList);
+    });
+    this.dispatcher.addEventListener('selectChange', () => {
+      console.log('selectChange');
+      console.log(this.getSelectedItem());
+    });
   }
 
 
@@ -24,40 +33,45 @@ export class Model {
   }
 
   getSelectedItem = (): IShopItem => {
-    return this._itemList.find(item => item.id === this._id);
+    return this._id === null
+      ? {id: "", name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      : this._itemList.find(item => item.id === this._id);
   }
 
-  select = (id: string): void => {
+  select = (id: string | null): void => {
     this._id = id;
     this.dispatcher.dispatchEvent(this._selectchange);
   }
 
-  updateItem = (type: 'update' | 'new' | 'delete', form?: FormData): void => {
+  update = (form: FormData): void => {
+    const index = this._itemList.findIndex(item => item.id === this._id);
+    if (index === -1) { alert('no index'); }
 
-    if (type === "update") {
-
-      const index = this._itemList.findIndex(item => item.id === this._id);
-      if (index === -1) { alert('no index'); }
-
-      this._itemList[index] = this.form_to_item(this._id, form);
-
-    } else if (type === "new") {
-
-      const newid = uniqueId();
-      this._itemList.push( this.form_to_item(newid, form) );
-      this.select(newid);
-
-    } else if (type === "delete") {
-
-      const index = this._itemList.findIndex(item => item.id === this._id)
-      if (index === -1) { alert('no index'); }
-
-      this._itemList.splice(index, 1);
-      this.select(this._itemList[index-1].id);
-    }
-
+    this._itemList[index] = this.form_to_item(this._id, form);
     this.dispatcher.dispatchEvent(this._datachange);
-    console.log(this._itemList);
+  }
+
+  new = (form: FormData):void => {
+    const newid = uniqueId();
+    this._itemList.push(this.form_to_item(newid, form));
+    this.dispatcher.dispatchEvent(this._datachange);
+    this.select(newid);
+  }
+
+  delete = (): void => {
+    const index = this._itemList.findIndex(item => item.id === this._id)
+    if (index === -1) { alert('no index'); }
+
+    this._itemList = this._itemList.filter(item => item.id !== this._id);
+    this.dispatcher.dispatchEvent(this._datachange);
+
+    if (this._itemList.length === 0) {
+      this.select(null); // リストが空の場合は空のアイテムを選択
+    } else if (index > 0) {
+      this.select(this._itemList[index - 1].id); // それ以外は一つ前のアイテムを選択
+    } else {
+      this.select(this._itemList[0].id); // 先頭が削除された場合は先頭のアイテムを選択
+    }
   }
 
   dispatchEvents = (): void => {

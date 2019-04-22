@@ -6,7 +6,6 @@ const itemlist = document.getElementById('itemlist') as HTMLUListElement;
 export const setSidebarEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('dataChange', () => {
-    console.log('datachange');
     renderItemlist(model.getTitleList());
   });
 
@@ -47,5 +46,6 @@ const highlightSelectedItem = (id: string): void => {
   });
 
   const selected_li = itemlist.querySelector(`[itemid="${id}"]`);
+  if (selected_li === null) { return; }
   selected_li.classList.add('is-active');
 }

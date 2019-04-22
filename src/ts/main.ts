@@ -9,25 +9,22 @@ const details = document.getElementById('details');
 export const setMainEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('selectChange', () => {
-    console.log('selectChange');
     const item = model.getSelectedItem();
-    console.log(item);
     initForm(item);
   })
 
   document.getElementById('save').addEventListener('click', () => {
     const data = new FormData(form);
-    model.updateItem("update" , data);
-    console.log('update');
+    model.update(data);
   });
 
   document.getElementById('new').addEventListener('click', () => {
     const data = new FormData(form);
-    model.updateItem("new", data);
+    model.new(data);
   });
 
   document.getElementById('delete').addEventListener('click', () => {
-    model.updateItem("delete");
+    model.delete();
   });
 
   document.querySelector('.descriptions-field button.plus').addEventListener('click', () => {
