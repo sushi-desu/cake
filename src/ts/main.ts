@@ -17,17 +17,17 @@ export const setMainEventListener = (model: Model): void => {
 
   document.getElementById('save').addEventListener('click', () => {
     const data = new FormData(form);
-    model.updateItem("update" , data);
+    model.update(data);
     console.log('update');
   });
 
   document.getElementById('new').addEventListener('click', () => {
     const data = new FormData(form);
-    model.updateItem("new", data);
+    model.new(data);
   });
 
   document.getElementById('delete').addEventListener('click', () => {
-    model.updateItem("delete");
+    model.delete();
   });
 
   document.querySelector('.descriptions-field button.plus').addEventListener('click', () => {
