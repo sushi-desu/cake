@@ -9,16 +9,13 @@ const details = document.getElementById('details');
 export const setMainEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('selectChange', () => {
-    console.log('selectChange');
     const item = model.getSelectedItem();
-    console.log(item);
     initForm(item);
   })
 
   document.getElementById('save').addEventListener('click', () => {
     const data = new FormData(form);
     model.update(data);
-    console.log('update');
   });
 
   document.getElementById('new').addEventListener('click', () => {

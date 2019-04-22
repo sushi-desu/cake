@@ -6,7 +6,6 @@ const itemlist = document.getElementById('itemlist') as HTMLUListElement;
 export const setSidebarEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('dataChange', () => {
-    console.log('datachange');
     renderItemlist(model.getTitleList());
   });
 

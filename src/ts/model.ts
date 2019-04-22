@@ -16,6 +16,15 @@ export class Model {
     this.dispatcher = document.createElement('div');
     this._datachange = new Event('dataChange');
     this._selectchange = new Event('selectChange');
+
+    this.dispatcher.addEventListener('dataChange', () => {
+      console.log('dataChange');
+      console.log(this._itemList);
+    });
+    this.dispatcher.addEventListener('selectChange', () => {
+      console.log('selectChange');
+      console.log(this.getSelectedItem());
+    });
   }
 
 
