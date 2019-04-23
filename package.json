@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "concurrently \"yarn:webpack --mode production\" \"yarn:gulp\"",
+    "build": "concurrently \"yarn:webpack --mode production\" \"yarn:gulp\" \"gulp manifest\"",
     "dev": "concurrently \"yarn:webpack --watch --mode development\" \"yarn:gulp-dev\"",
     "webpack": "webpack",
     "gulp": "gulp build",
