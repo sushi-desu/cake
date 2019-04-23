@@ -1,4 +1,4 @@
-import { getLocalStorage, lastSelectedId } from "./chromeApi";
+import * as chromeStorage from "./chromeApi";
 import { IShopItem } from "./item";
 import { zip, uniqueId } from "./util"
 
@@ -11,17 +11,19 @@ export class Model {
   private _selectchange: Event;
 
   constructor() {
-    this._itemList = getLocalStorage();
-    this._id = lastSelectedId();
+    this._itemList = chromeStorage.getItemlist();
+    this._id = chromeStorage.getLastSelectedId();
     this.dispatcher = document.createElement('div');
     this._datachange = new Event('dataChange');
     this._selectchange = new Event('selectChange');
 
     this.dispatcher.addEventListener('dataChange', () => {
+      chromeStorage.setItemlist(this._itemList);
       console.log('dataChange');
       console.log(this._itemList);
     });
     this.dispatcher.addEventListener('selectChange', () => {
+      chromeStorage.setLastSelectedId(this._id);
       console.log('selectChange');
       console.log(this.getSelectedItem());
     });
@@ -40,6 +42,7 @@ export class Model {
 
   select = (id: string | null): void => {
     this._id = id;
+    chromeStorage.setLastSelectedId(id);
     this.dispatcher.dispatchEvent(this._selectchange);
   }
 
