@@ -4,6 +4,7 @@ import { zip, uniqueId } from "./util"
 
 export class Model {
 
+  ready: Promise<any>;
   private _itemList: IShopItem[];
   private _id: string | null;
   dispatcher: HTMLDivElement;
@@ -11,8 +12,11 @@ export class Model {
   private _selectchange: Event;
 
   constructor() {
-    this._itemList = chromeStorage.getItemlist();
-    this._id = chromeStorage.getLastSelectedId();
+    this.ready = new Promise(async resolve => {
+      this._itemList = await chromeStorage.getItemlist()
+      this._id = await chromeStorage.getLastSelectedId()
+      resolve()
+    })
     this.dispatcher = document.createElement('div');
     this._datachange = new Event('dataChange');
     this._selectchange = new Event('selectChange');
