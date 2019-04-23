@@ -11,6 +11,7 @@
     "gulp-dev": "gulp dev"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.83",
     "apply-loader": "^2.0.0",
     "concurrently": "^4.1.0",
     "css-loader": "^2.1.1",
