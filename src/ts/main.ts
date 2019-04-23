@@ -5,25 +5,33 @@ import { empty } from "./util";
 const form = document.getElementById('form') as HTMLFormElement;
 const descriptions = document.getElementById('descriptions');
 const details = document.getElementById('details');
+const savebtn = document.getElementById('save') as HTMLButtonElement;
+const newbtn = document.getElementById('new') as HTMLButtonElement;
+const deletebtn = document.getElementById('delete') as HTMLButtonElement;
 
 export const setMainEventListener = (model: Model): void => {
 
   model.dispatcher.addEventListener('selectChange', () => {
     const item = model.getSelectedItem();
     initForm(item);
+    validation();
   })
 
-  document.getElementById('save').addEventListener('click', () => {
+  form.addEventListener('input', () => {
+    validation();
+  });
+
+  savebtn.addEventListener('click', () => {
     const data = new FormData(form);
     model.update(data);
   });
 
-  document.getElementById('new').addEventListener('click', () => {
+  newbtn.addEventListener('click', () => {
     const data = new FormData(form);
     model.new(data);
   });
 
-  document.getElementById('delete').addEventListener('click', () => {
+  deletebtn.addEventListener('click', () => {
     model.delete();
   });
 
@@ -43,6 +51,36 @@ export const setMainEventListener = (model: Model): void => {
     removeDetailsForm();
   });
 
+}
+
+const validation = (): void => {
+  if (is_valid(form)) {
+    savebtn.disabled = false;
+    newbtn.disabled = false;
+  } else {
+    savebtn.disabled = true;
+    newbtn.disabled = true;
+  }
+}
+
+const is_valid = (form: HTMLFormElement): boolean => {
+  form.jancode.setCustomValidity('');
+  if (form.jancode.value.length === 13) {
+    const jan: string[] = form.jancode.value.split('');
+    const code = jan.slice(0, 12);
+    let od = code.filter((_, i) => i % 2 === 0).map(n => parseInt(n));
+    let ev = code.filter((_,i) => i % 2 === 1).map(n => parseInt(n));
+    if( od.some(n => isNaN(n)) || ev.some(n => isNaN(n)) ) {
+      form.jancode.setCustomValidity('数値を入力してください')
+    }
+    const total = od.reduce((acc, n) => acc + n) + ev.reduce((acc, n) => acc + n)*3
+
+    if ( (10 - (total % 10)).toString() !== form.jancode.value[12] ) {
+      form.jancode.setCustomValidity('JANコードが正しくありません')
+    }
+  }
+  document.querySelector('.help').innerHTML = form.jancode.validationMessage;
+  return form.checkValidity();
 }
 
 const initForm = (item: IShopItem): void => {
@@ -74,8 +112,6 @@ const initForm = (item: IShopItem): void => {
 }
 
 const addDescriptionForm = () => {
-  const descs = document.getElementById('descriptions');
-
   const div = document.createElement('div')
   div.classList.add('description', 'field');
   div.innerHTML = `
@@ -88,7 +124,7 @@ const addDescriptionForm = () => {
         <textarea class="textarea" name="description_body"></textarea>
       </div>`;
 
-  descs.appendChild(div);
+  descriptions.appendChild(div);
   return div;
 }
 
@@ -100,7 +136,6 @@ const removeDescriptionForm = () => {
 }
 
 const addDetailsForm = () => {
-  const details = document.getElementById('details');
   const div = document.createElement('div');
   div.classList.add('detail');
   div.innerHTML = `

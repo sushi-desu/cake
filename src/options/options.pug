@@ -25,8 +25,10 @@ html(lang="ja")
         form#form
           .field.padding-bottom
             label(for="name", class=['label']) 商品名
-            .control
-              input#name(type="text", name="name", class=['input'])
+            .control.has-icons-right
+              input#name(type="text", name="name", class=['input'], required)
+              span.icon.is-small.is-right
+                i(class=["fas fa-exclamation-triangle"])
 
           .columns.is-variable.is-0-mobile.is-1-tablet.is-1-desktop
             .column
@@ -34,31 +36,31 @@ html(lang="ja")
                 .column.field
                   label(for="price", class=['label']) 値段(税抜き)
                   .control
-                    input#price(type="text", name="price", class=['input'])
+                    input#price(type="number", min="1", name="price", class=['input'], required)
                 .column.field
                   label(for="weight", class=['label']) 重さ(g)
                   .control
-                    input#weight(type="text", name="weight", class=['input'])
+                    input#weight(type="text", pattern="^([1-9][0-9]*|0)(\.[0-9]{1,2})?$", name="weight", class=['input'], required)
 
             .column
               .columns.is-variable.is-1.is-mobile
                 .column.field
                   label(for="rakuten_stock", class=['label']) 在庫数(楽天)
                   .control
-                    input#rakuten_stock(type="text", name="rakuten_stock", class=['input'])
+                    input#rakuten_stock(type="number", min="0", name="rakuten_stock", class=['input'], required)
                 .column.field
                   label(for="makeshop_stock", class=['label']) (とみクリ)
                   .control
-                    input#makeshop_stock(type="text", name="makeshop_stock", class=['input'])
+                    input#makeshop_stock(type="number", min="0", name="makeshop_stock", class=['input'], required)
 
           .columns
             .column.is-half.field
               label(for="jancode", class=['label']) JANコード
               .control.has-icons-right
-                input#jancode(type="text", name="jancode", class=['input'])
+                input#jancode(type="text", pattern="[0-9]{13}", name="jancode", class=['input'])
                 span.icon.is-small.is-right
                   i(class=["fas fa-exclamation-triangle"])
-              p.help ok
+              p.help
 
           hr
 

@@ -16,6 +16,15 @@ body
 h2
   text-align: center
 
+.input:valid + span
+  display: none
+
+.input:invalid
+  border-color: #ff3860
+.input:invalid:focus,
+.input:invalid:active
+    box-shadow: 0 0 0 0.125em rgba(255,56,96,.25)
+
 textarea
   min-height: 120px
 
