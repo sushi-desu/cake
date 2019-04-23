@@ -4,9 +4,10 @@ import { setSidebarEventListener } from "../ts/sidebar";
 
 
 const model = new Model();
+model.ready.then(() => {
+  setMainEventListener(model);
+  setSidebarEventListener(model);
 
-setMainEventListener(model);
-setSidebarEventListener(model);
-
-// initialize
-model.dispatchEvents();
+  // initialize
+  model.dispatchEvents();
+})
