@@ -1,6 +1,6 @@
 import { Model } from "../ts/model";
 import { IShopItem } from "./item";
-import { empty } from "./util";
+import { empty, isJancode } from "./util";
 
 const form = document.getElementById('form') as HTMLFormElement;
 const descriptions = document.getElementById('descriptions');
@@ -87,22 +87,14 @@ const deletebtn_validateion = (...flags: boolean[]) => {
 }
 
 const is_validform = (form: HTMLFormElement): boolean => {
-  form.jancode.setCustomValidity('');
-  if (form.jancode.value.length === 13) {
-    const jan: string[] = form.jancode.value.split('');
-    const code = jan.slice(0, 12);
-    let od = code.filter((_, i) => i % 2 === 0).map(n => parseInt(n));
-    let ev = code.filter((_,i) => i % 2 === 1).map(n => parseInt(n));
-    if( od.some(n => isNaN(n)) || ev.some(n => isNaN(n)) ) {
-      form.jancode.setCustomValidity('数値を入力してください')
-    }
-    const total = od.reduce((acc, n) => acc + n) + ev.reduce((acc, n) => acc + n)*3
-
-    if ( (10 - (total % 10)).toString() !== form.jancode.value[12] ) {
-      form.jancode.setCustomValidity('JANコードが正しくありません')
-    }
+  const janinput = form.jancode as HTMLInputElement;  
+  if (janinput.value === "" || isJancode(janinput.value))  {
+    janinput.setCustomValidity('');
+  } else {
+    janinput.setCustomValidity('JANコードが正しくありません')
   }
-  document.querySelector('.help').innerHTML = form.jancode.validationMessage;
+  document.querySelector('.help').innerHTML = janinput.validationMessage;
+
   return form.checkValidity();
 }
 
