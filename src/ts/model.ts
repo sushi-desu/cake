@@ -40,7 +40,7 @@ export class Model {
 
   getSelectedItem = (): IShopItem => {
     return this._id === null
-      ? {id: "", name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
       : this._itemList.find(item => item.id === this._id);
   }
 
