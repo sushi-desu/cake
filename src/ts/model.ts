@@ -38,9 +38,13 @@ export class Model {
     return this._itemList.map(item => ({title: item.name, id: item.id}) )
   }
 
+  getId = (): string | null => {
+    return this._id;
+  }
+
   getSelectedItem = (): IShopItem => {
     return this._id === null
-      ? {id: "", name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
       : this._itemList.find(item => item.id === this._id);
   }
 
@@ -56,6 +60,7 @@ export class Model {
 
     this._itemList[index] = this.form_to_item(this._id, form);
     this.dispatcher.dispatchEvent(this._datachange);
+    this.select(this._id);
   }
 
   new = (form: FormData):void => {
