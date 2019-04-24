@@ -14,11 +14,12 @@ export const setMainEventListener = (model: Model): void => {
   model.dispatcher.addEventListener('selectChange', () => {
     const item = model.getSelectedItem();
     initForm(item);
-    validation();
+    validation(item.id);
   })
 
   form.addEventListener('input', () => {
-    validation();
+    const id = model.getId();
+    validation(id);
   });
 
   savebtn.addEventListener('click', () => {
@@ -53,17 +54,39 @@ export const setMainEventListener = (model: Model): void => {
 
 }
 
-const validation = (): void => {
-  if (is_valid(form)) {
-    savebtn.disabled = false;
-    newbtn.disabled = false;
+const validation = (id: string | null): void => {
+  const valid = is_validform(form);
+  const notempty = id !== null
+  savebtn_validation(valid, notempty)
+  newbtn_validation(valid)
+  deletebtn_validateion(notempty)
+}
+
+const savebtn_validation = (...flags: boolean[]) => {
+  if (flags.every(f => f)) {
+    savebtn.disabled = false
   } else {
-    savebtn.disabled = true;
-    newbtn.disabled = true;
+    savebtn.disabled = true
   }
 }
 
-const is_valid = (form: HTMLFormElement): boolean => {
+const newbtn_validation = (...flags: boolean[]) => {
+  if (flags.every(f => f)) {
+    newbtn.disabled = false
+  } else {
+    newbtn.disabled = true
+  }
+}
+
+const deletebtn_validateion = (...flags: boolean[]) => {
+  if (flags.every(f => f)) {
+    deletebtn.disabled = false
+  } else {
+    deletebtn.disabled = true
+  }
+}
+
+const is_validform = (form: HTMLFormElement): boolean => {
   form.jancode.setCustomValidity('');
   if (form.jancode.value.length === 13) {
     const jan: string[] = form.jancode.value.split('');
