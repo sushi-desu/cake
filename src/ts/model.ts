@@ -38,6 +38,10 @@ export class Model {
     return this._itemList.map(item => ({title: item.name, id: item.id}) )
   }
 
+  getId = (): string | null => {
+    return this._id;
+  }
+
   getSelectedItem = (): IShopItem => {
     return this._id === null
       ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
