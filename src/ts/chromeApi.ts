@@ -23,3 +23,17 @@ export const setItemlist = (array: IShopItem[]): void => {
 export const setLastSelectedId = (id: string | null): void => {
   chrome.storage.local.set({'id': id})
 }
+
+export const getItem = (): Promise<IShopItem> => {
+  return new Promise<IShopItem>(async resolve => {
+    const id = await getLastSelectedId()
+    const itemlist = await getItemlist()
+    
+    const index = itemlist.findIndex(item => item.id === id)
+    if (index !== -1) {
+      resolve(itemlist[index])
+    } else {
+      resolve({id: null, name: '', price: '', weight: '', rakuten_stock: '', makeshop_stock: '', jancode: '', descriptions: [], details: []})
+    }
+  })
+}
