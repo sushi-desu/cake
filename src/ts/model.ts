@@ -60,6 +60,7 @@ export class Model {
 
     this._itemList[index] = this.form_to_item(this._id, form);
     this.dispatcher.dispatchEvent(this._datachange);
+    this.select(this._id);
   }
 
   new = (form: FormData):void => {
