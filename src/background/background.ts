@@ -14,3 +14,10 @@ chrome.runtime.onInstalled.addListener(() => {
     }
   })
 })
+
+chrome.browserAction.onClicked.addListener( () => {
+  console.log(`clicked`)
+  chrome.tabs.executeScript({
+    'file': './content.js'
+  })
+})
