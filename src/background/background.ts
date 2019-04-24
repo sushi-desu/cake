@@ -1,5 +1,6 @@
 import * as chromeStorage from '../ts/chromeApi'
 
+// 初回インストール時、ストレージに初期値をセット
 chrome.runtime.onInstalled.addListener(() => {
   chromeStorage.getItemlist().then(res => {
     if (res === undefined) {
@@ -15,6 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
   })
 })
 
+// アイコンクリック時にスクリプトを実行
 chrome.browserAction.onClicked.addListener( () => {
   console.log(`clicked`)
   chrome.tabs.executeScript({
