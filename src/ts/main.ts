@@ -87,7 +87,7 @@ const deletebtn_validateion = (...flags: boolean[]) => {
 }
 
 const is_validform = (form: HTMLFormElement): boolean => {
-  const janinput = form.jancode as HTMLInputElement;  
+  const janinput = form.jancode as HTMLInputElement;
   if (janinput.value === "" || isJancode(janinput.value))  {
     janinput.setCustomValidity('');
   } else {

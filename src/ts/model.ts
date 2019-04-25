@@ -82,7 +82,7 @@ export class Model {
     } else if (index > 0) {
       this.select(this._itemList[index - 1].id); // それ以外は一つ前のアイテムを選択
     } else {
-      this.select(this._itemList[0].id); // 先頭が削除された場合は先頭のアイテムを選択
+      this.select(this._itemList[0].id); // 先頭が削除された場合は次に先頭のアイテムを選択
     }
   }
 
