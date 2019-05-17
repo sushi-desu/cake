@@ -30,9 +30,5 @@ export const isJancode = (jan: string): boolean => {
 
   const res = total % 10
   const checkd = digits[12]
-  if ( res === 0 ? 0 === checkd : 10-res === checkd ) {
-    return true
-  } else {
-    return false
-  }
+  return res === 0 ? 0 === checkd : 10-res === checkd
 }
