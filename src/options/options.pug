@@ -10,110 +10,117 @@ html(lang="ja")
     title Settings
 
   body
-    main.bd-main.columns.is-mobile
+    nav.navbar.has-shadow
+      .container
+        .navbar-brand
+          img(src="icons/32.png").navbar-item
 
-      .container.column.is-3.is-narrow-mobile.bd-side
-        aside.menu.sticky
-          p.menu-label Item List
-          ul.menu-list#itemlist.sticky.scroll
+    main.bd-main
+      .container
+        .columns.is-mobile
 
-      .column.is-1.is-hidden-touch
+          .column.is-3.is-narrow-mobile.bd-side
+            aside.menu.sticky
+              p.menu-label Item List
+              ul.menu-list#itemlist.sticky.scroll
 
-      .container.column
-        form#form
-          .field.padding-bottom
-            label(for="name", class=['label']) 商品名
-            .control.has-icons-right
-              input#name(type="text", name="name", class=['input'], required)
-              span.icon.is-small.is-right
-                i(class=["fas fa-exclamation-triangle"])
+          .column.is-1.is-hidden-touch
 
-          .columns.is-variable.is-0-mobile.is-1-tablet.is-1-desktop
-            .column
-              .columns.is-variable.is-1.is-mobile
-                .column.field
-                  label(for="price", class=['label']) 値段(税抜き)
+          .column
+            form#form
+              .field.padding-bottom
+                label(for="name", class=['label']) 商品名
+                .control.has-icons-right
+                  input#name(type="text", name="name", class=['input'], required)
+                  span.icon.is-small.is-right
+                    i(class=["fas fa-exclamation-triangle"])
+
+              .columns.is-variable.is-0-mobile.is-1-tablet.is-1-desktop
+                .column
+                  .columns.is-variable.is-1.is-mobile
+                    .column.field
+                      label(for="price", class=['label']) 値段(税抜き)
+                      .control
+                        input#price(type="number", min="1", name="price", class=['input'], required)
+                    .column.field
+                      label(for="weight", class=['label']) 重さ(g)
+                      .control
+                        input#weight(type="text", pattern="^([1-9][0-9]*|0)(\.[0-9]{1,2})?$", name="weight", class=['input'], required)
+
+                .column
+                  .columns.is-variable.is-1.is-mobile
+                    .column.field
+                      label(for="rakuten_stock", class=['label']) 在庫数(楽天)
+                      .control
+                        input#rakuten_stock(type="number", min="0", name="rakuten_stock", class=['input'], required)
+                    .column.field
+                      label(for="makeshop_stock", class=['label']) (とみクリ)
+                      .control
+                        input#makeshop_stock(type="number", min="0", name="makeshop_stock", class=['input'], required)
+
+              .columns
+                .column.is-half.field
+                  label(for="jancode", class=['label']) JANコード
+                  .control.has-icons-right
+                    input#jancode(type="text", pattern="[0-9]{13}", name="jancode", class=['input'])
+                    span.icon.is-small.is-right
+                      i(class=["fas fa-exclamation-triangle"])
+                  p.help
+
+              hr
+
+              div.descriptions-field
+                h2.subtitle 商品説明
+                div#descriptions(class=['padding-bottom'])
+                  div.description
+                    span タイトル
+                    input(type="text", name="description_title")
+                    span 本文
+                    textarea(name="description_body", cols="30", rows="10")
+                .field.is-grouped.is-grouped-right
                   .control
-                    input#price(type="number", min="1", name="price", class=['input'], required)
-                .column.field
-                  label(for="weight", class=['label']) 重さ(g)
+                    button.plus(type="button" class=['button is-light'])
+                      span.icon.is-small
+                        i.fas.fa-plus.fa-sm
                   .control
-                    input#weight(type="text", pattern="^([1-9][0-9]*|0)(\.[0-9]{1,2})?$", name="weight", class=['input'], required)
+                    button.minus(type="button" class=['button is-light'])
+                      span.icon.is-small
+                        i.fas.fa-minus.fa-sm
 
-            .column
-              .columns.is-variable.is-1.is-mobile
-                .column.field
-                  label(for="rakuten_stock", class=['label']) 在庫数(楽天)
+              hr
+
+              div.details-field
+                h2.subtitle 商品詳細
+                div#details(class=['padding-bottom'])
+                  div.detail
+                    span タイトル
+                    input(type="text", name="detail_title")
+                    span 内容
+                    input(type="text", name="detail_body")
+                .field.is-grouped.is-grouped-right
                   .control
-                    input#rakuten_stock(type="number", min="0", name="rakuten_stock", class=['input'], required)
-                .column.field
-                  label(for="makeshop_stock", class=['label']) (とみクリ)
+                    button.plus(type="button" class=['button is-light'])
+                      span.icon.is-small
+                        i.fas.fa-plus.fa-sm
                   .control
-                    input#makeshop_stock(type="number", min="0", name="makeshop_stock", class=['input'], required)
+                    button.minus(type="button" class=['button is-light'])
+                      span.icon.is-small
+                        i.fas.fa-minus.fa-sm
 
-          .columns
-            .column.is-half.field
-              label(for="jancode", class=['label']) JANコード
-              .control.has-icons-right
-                input#jancode(type="text", pattern="[0-9]{13}", name="jancode", class=['input'])
-                span.icon.is-small.is-right
-                  i(class=["fas fa-exclamation-triangle"])
-              p.help
+              hr
 
-          hr
+              .level.is-mobile
+                .level-left
+                  .field.is-grouped
+                    .control
+                      button#save(type="button" class=['button is-info']) 保存
+                    .control
+                      button#new(type="button" class=['button is-primary is-outlined']) 新規として登録
+                .level-right
+                  .field
+                    .control
+                      button#delete(type="button" class=['button is-danger is-outlined']) 削除
 
-          div.descriptions-field
-            h2.subtitle 商品説明
-            div#descriptions(class=['padding-bottom'])
-              div.description
-                span タイトル
-                input(type="text", name="description_title")
-                span 本文
-                textarea(name="description_body", cols="30", rows="10")
-            .field.is-grouped.is-grouped-right
-              .control
-                button.plus(type="button" class=['button is-light'])
-                  span.icon.is-small
-                    i.fas.fa-plus.fa-sm
-              .control
-                button.minus(type="button" class=['button is-light'])
-                  span.icon.is-small
-                    i.fas.fa-minus.fa-sm
-
-          hr
-
-          div.details-field
-            h2.subtitle 商品詳細
-            div#details(class=['padding-bottom'])
-              div.detail
-                span タイトル
-                input(type="text", name="detail_title")
-                span 内容
-                input(type="text", name="detail_body")
-            .field.is-grouped.is-grouped-right
-              .control
-                button.plus(type="button" class=['button is-light'])
-                  span.icon.is-small
-                    i.fas.fa-plus.fa-sm
-              .control
-                button.minus(type="button" class=['button is-light'])
-                  span.icon.is-small
-                    i.fas.fa-minus.fa-sm
-
-          hr
-
-          .level.is-mobile
-            .level-left
-              .field.is-grouped
-                .control
-                  button#save(type="button" class=['button is-info']) 保存
-                .control
-                  button#new(type="button" class=['button is-primary is-outlined']) 新規として登録
-            .level-right
-              .field
-                .control
-                  button#delete(type="button" class=['button is-danger is-outlined']) 削除
-
-      .column.is-1.is-hidden-touch
+          .column.is-1.is-hidden-touch
 
     script(src="options.js")
