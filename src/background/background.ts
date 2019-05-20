@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener(() => {
   })
   chromeStorage.getLastSelectedId().then(res => {
     if (res === undefined) {
-      console.log('Initialize "id"')
+      console.log('Initialize "lastSelectedId"')
       chromeStorage.setLastSelectedId(null);
     }
   })
