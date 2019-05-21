@@ -1,13 +1,21 @@
+import { getAll } from './util'
 
 const importbtn = document.getElementById('import')
 const exportbtn = document.getElementById('export')
 const modal = document.getElementById('import-modal')
+const modalCloses = getAll('.modal-background, .modal-close, .modal-card-foot > .button')
 const html = document.documentElement
 
 export const setNavbarEventListener = () => {
 
   importbtn.addEventListener('click', () => {
     openModal(modal)
+  })
+
+  modalCloses.forEach((element) => {
+    element.addEventListener('click', () => {
+      closeModal(modal)
+    })
   })
 
   exportbtn.addEventListener('click', () => {
@@ -27,4 +35,9 @@ export const setNavbarEventListener = () => {
 const openModal = (target: HTMLElement): void => {
   target.classList.add('is-active')
   html.classList.add('is-clipped')
+}
+
+const closeModal = (target: HTMLElement): void => {
+  target.classList.remove('is-active')
+  html.classList.remove('is-clipped')
 }

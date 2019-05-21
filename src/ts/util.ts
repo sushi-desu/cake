@@ -5,6 +5,10 @@ export const empty = (target: HTMLElement): void => {
   }
 }
 
+export const getAll = (selector: string): HTMLElement[] => {
+  return Array.from(document.querySelectorAll(selector))
+}
+
 export const zip = (f, xs, ys) =>
   (xs.length > ys.length)
     ? xs.map((x, i) => f(x, ys[i]))
