@@ -1,11 +1,13 @@
 
 const importbtn = document.getElementById('import')
 const exportbtn = document.getElementById('export')
+const modal = document.getElementById('import-modal')
+const html = document.documentElement
 
 export const setNavbarEventListener = () => {
 
   importbtn.addEventListener('click', () => {
-    console.log('import')
+    openModal(modal)
   })
 
   exportbtn.addEventListener('click', () => {
@@ -19,4 +21,10 @@ export const setNavbarEventListener = () => {
       })
     })
   })
+}
+
+
+const openModal = (target: HTMLElement): void => {
+  target.classList.add('is-active')
+  html.classList.add('is-clipped')
 }
