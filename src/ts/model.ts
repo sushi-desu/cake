@@ -5,7 +5,8 @@ import { zip, uniqueId } from "./util"
 export class Model {
 
   ready: Promise<any>;
-  private _itemList: IShopItem[];
+  private _itemList: { [id: string]: IShopItem };
+  private _idList: string[]
   private _id: string | null;
   dispatcher: HTMLDivElement;
   private _datachange: Event;
@@ -14,6 +15,7 @@ export class Model {
   constructor() {
     this.ready = new Promise(async resolve => {
       this._itemList = await chromeStorage.getItemlist()
+      this._idList = await chromeStorage.getIdlist()
       this._id = await chromeStorage.getLastSelectedId()
       resolve()
     })
@@ -23,6 +25,7 @@ export class Model {
 
     this.dispatcher.addEventListener('dataChange', () => {
       chromeStorage.setItemlist(this._itemList);
+      chromeStorage.setIdlist(this._idList);
       console.log('dataChange');
       console.log(this._itemList);
     });
@@ -35,7 +38,7 @@ export class Model {
 
 
   getTitleList = (): { title: string, id: string }[] => {
-    return this._itemList.map(item => ({title: item.name, id: item.id}) )
+    return this._idList.map( (id) => ({ title: this._itemList[id].name, id: id }) )
   }
 
   getId = (): string | null => {
@@ -45,44 +48,43 @@ export class Model {
   getSelectedItem = (): IShopItem => {
     return this._id === null
       ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
-      : this._itemList.find(item => item.id === this._id);
+      : this._itemList[this._id];
   }
 
   select = (id: string | null): void => {
     this._id = id;
-    chromeStorage.setLastSelectedId(id);
     this.dispatcher.dispatchEvent(this._selectchange);
   }
 
   update = (form: FormData): void => {
-    const index = this._itemList.findIndex(item => item.id === this._id);
-    if (index === -1) { alert('no index'); }
+    if (!this._itemList.hasOwnProperty(this._id)) { alert('no index'); }
 
-    this._itemList[index] = this.form_to_item(this._id, form);
+    this._itemList[this._id] = this.form_to_item(this._id, form);
     this.dispatcher.dispatchEvent(this._datachange);
-    this.select(this._id);
+    this.select(this._id); // sidebarが再描画されるのでハイライト
   }
 
   new = (form: FormData):void => {
     const newid = uniqueId();
-    this._itemList.push(this.form_to_item(newid, form));
+    this._itemList[newid] = this.form_to_item(newid, form);
+    this._idList.push(newid)
     this.dispatcher.dispatchEvent(this._datachange);
     this.select(newid);
   }
 
   delete = (): void => {
-    const index = this._itemList.findIndex(item => item.id === this._id)
-    if (index === -1) { alert('no index'); }
-
-    this._itemList = this._itemList.filter(item => item.id !== this._id);
+    delete this._itemList[this._id]
+    const index = this._idList.findIndex( (id) => id === this._id )
+    if (index === -1) { alert('no index') }
+    this._idList = this._idList.filter((id) => id !== this._id)
     this.dispatcher.dispatchEvent(this._datachange);
 
-    if (this._itemList.length === 0) {
+    if (this._idList.length === 0) {
       this.select(null); // リストが空の場合は空のアイテムを選択
     } else if (index > 0) {
-      this.select(this._itemList[index - 1].id); // それ以外は一つ前のアイテムを選択
+      this.select(this._idList[index - 1]); // それ以外は一つ前のアイテムを選択
     } else {
-      this.select(this._itemList[0].id); // 先頭が削除された場合は次に先頭のアイテムを選択
+      this.select(this._idList[0]); // 先頭が削除された場合は次に先頭のアイテムを選択
     }
   }
 

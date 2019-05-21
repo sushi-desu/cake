@@ -5,7 +5,13 @@ chrome.runtime.onInstalled.addListener(() => {
   chromeStorage.getItemlist().then(res => {
     if (res === undefined) {
       console.log('Initialize "items"')
-      chromeStorage.setItemlist([]);
+      chromeStorage.setItemlist({});
+    }
+  })
+  chromeStorage.getIdlist().then(res => {
+    if (res === undefined) {
+      console.log('Initialize "idlist"')
+      chromeStorage.setIdlist([])
     }
   })
   chromeStorage.getLastSelectedId().then(res => {
