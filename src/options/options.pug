@@ -30,14 +30,25 @@ html(lang="ja")
             .modal-card-head
               p 商品リストインポート
             .modal-card-body
-              .file.has-name.is-fullwidth
-                label.file-label
-                  input.file-input(type="file" name="resume")
-                  span.file-cta
-                    span.file-icon
-                      i(class=["fas fa-upload"])
-                    span.file-label ファイルを選択
-                  span.file-name
+              .field.padding-bottom
+                .file.has-name.is-fullwidth
+                  label.file-label
+                    input.file-input(type="file" name="resume")
+                    span.file-cta
+                      span.file-icon
+                        i(class=["fas fa-upload"])
+                      span.file-label ファイルを選択
+                    span.file-name
+              .field
+                .control
+                  label.radio
+                    input(type="radio" name="import_option" checked)
+                    span 既存の商品リストに追加
+              .field
+                .control
+                  label.radio
+                    input(type="radio" name="import_option")
+                    span 既存の商品リストを上書き
             .modal-card-foot
               button.button.is-info インポート
               button.button キャンセル
