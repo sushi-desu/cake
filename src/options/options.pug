@@ -24,6 +24,26 @@ html(lang="ja")
                 a#import.dropdown-item インポート
                 a#export.dropdown-item エクスポート
 
+        .modal
+          .modal-background
+          .modal-card
+            .modal-card-head
+              p 商品リストインポート
+            .modal-card-body
+              .file.has-name.is-fullwidth
+                label.file-label
+                  input.file-input(type="file" name="resume")
+                  span.file-cta
+                    span.file-icon
+                      i(class=["fas fa-upload"])
+                    span.file-label ファイルを選択
+                  span.file-name
+            .modal-card-foot
+              button.button.is-info インポート
+              button.button キャンセル
+          button.modal-close
+
+
     main.bd-main
       .container
         .columns.is-mobile
