@@ -1,3 +1,4 @@
+import { updateStorage } from './chromeApi'
 import { getAll } from './util'
 
 const importbtn = document.getElementById('import')
@@ -29,8 +30,8 @@ export const setNavbarEventListener = () => {
     if (!file_input.files.length) { return }
 
     const result = await importFile(file_input)
-    console.log(result)
-    // chrome.storage.local.set(result)
+    const response = await updateStorage(true, result)
+    showImportNotifications(response)
   })
 
   exportbtn.addEventListener('click', () => {
@@ -70,6 +71,10 @@ const importFile = async (input: HTMLInputElement) => {
   const json = await read(input.files[0])
   const result = JSON.parse(json)
   return result
+}
+
+const showImportNotifications = (response: {success: boolean, message: string}): void => {
+  console.log(response)
 }
 
 const read = (file: File) => {
