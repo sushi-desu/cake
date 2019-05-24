@@ -24,14 +24,16 @@ export class Model {
     this._datachange = new Event(EVENTS.DATA_CHANGE);
     this._selectchange = new Event(EVENTS.SELECT_CHANGE);
 
-    this.dispatcher.addEventListener(EVENTS.DATA_CHANGE, () => {
-      chromeStorage.setItemlist(this._itemList);
-      chromeStorage.setIdlist(this._idList);
+    this.dispatcher.addEventListener(EVENTS.DATA_CHANGE, async () => {
+      await Promise.all([
+        chromeStorage.setItemlist(this._itemList),
+        chromeStorage.setIdlist(this._idList)
+      ])
       console.log('dataChange');
       console.log(this._itemList);
     });
-    this.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, () => {
-      chromeStorage.setLastSelectedId(this._id);
+    this.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, async () => {
+      await chromeStorage.setLastSelectedId(this._id);
       console.log('selectChange');
       console.log(this.getSelectedItem());
     });
