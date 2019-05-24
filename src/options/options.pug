@@ -33,7 +33,7 @@ html(lang="ja")
               .field.padding-bottom
                 .file.has-name.is-fullwidth
                   label.file-label
-                    input.file-input(type="file" name="resume")
+                    input.file-input(type="file" name="import_file" accept=".json")
                     span.file-cta
                       span.file-icon
                         i(class=["fas fa-upload"])
@@ -50,7 +50,7 @@ html(lang="ja")
                     input(type="radio" name="import_option")
                     span 既存の商品リストを上書き
             .modal-card-foot
-              button.button.is-info インポート
+              button#import_start.button.is-info インポート
               button.button キャンセル
           button.modal-close
 

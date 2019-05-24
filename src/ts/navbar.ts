@@ -2,7 +2,10 @@ import { getAll } from './util'
 
 const importbtn = document.getElementById('import')
 const exportbtn = document.getElementById('export')
+const startbtn = document.getElementById('import_start')
+
 const modal = document.getElementById('import-modal')
+const file_input = modal.querySelector('input[name="import_file"]') as HTMLInputElement
 const modalCloses = getAll('.modal-background, .modal-close, .modal-card-foot > .button')
 const html = document.documentElement
 
@@ -16,6 +19,18 @@ export const setNavbarEventListener = () => {
     element.addEventListener('click', () => {
       closeModal(modal)
     })
+  })
+
+  file_input.addEventListener('change', () => {
+    showFileName(file_input)
+  })
+
+  startbtn.addEventListener('click', async () => {
+    if (!file_input.files.length) { return }
+
+    const result = await importFile(file_input)
+    console.log(result)
+    // chrome.storage.local.set(result)
   })
 
   exportbtn.addEventListener('click', () => {
@@ -40,4 +55,30 @@ const openModal = (target: HTMLElement): void => {
 const closeModal = (target: HTMLElement): void => {
   target.classList.remove('is-active')
   html.classList.remove('is-clipped')
+}
+
+const showFileName = (input: HTMLInputElement): void => {
+  const name = modal.querySelector('.file-name') as HTMLSpanElement
+  if (input.files.length !== 0) {
+    name.innerText = input.files[0].name
+  } else {
+    name.innerText = ""
+  }
+}
+
+const importFile = async (input: HTMLInputElement) => {
+  const json = await read(input.files[0])
+  const result = JSON.parse(json)
+  return result
+}
+
+const read = (file: File) => {
+  const reader = new FileReader()
+  reader.readAsText(file)
+
+  return new Promise<string>(resolve => {
+    reader.onload = (e: ProgressEvent & {target: {result: string}}) => {
+      resolve(e.target.result)
+    }
+  })
 }
