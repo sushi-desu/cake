@@ -1,6 +1,6 @@
 import * as chromeStorage from "./chromeApi";
 import { IShopItem, EMPTY_ITEM } from "./item";
-import { zip, uniqueId, empty } from "./util"
+import { zip, uniqueId } from "./util"
 import { EVENTS } from "./constant";
 
 export class Model {
