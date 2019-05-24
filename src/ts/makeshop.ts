@@ -1,7 +1,7 @@
 import { IShopItem } from './item'
 
 export const write_to_makeshop = (item: IShopItem): void => {
-  const frame = window.frames["mainframe"].document;  
+  const frame = window.frames["mainframe"].document;
 
   // 非表示設定
   frame.getElementById('displayN').checked = true;

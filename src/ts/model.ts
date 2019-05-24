@@ -1,6 +1,7 @@
 import * as chromeStorage from "./chromeApi";
-import { IShopItem } from "./item";
-import { zip, uniqueId } from "./util"
+import { IShopItem, EMPTY_ITEM } from "./item";
+import { zip, uniqueId, empty } from "./util"
+import { EVENTS } from "./constant";
 
 export class Model {
 
@@ -20,16 +21,16 @@ export class Model {
       resolve()
     })
     this.dispatcher = document.createElement('div');
-    this._datachange = new Event('dataChange');
-    this._selectchange = new Event('selectChange');
+    this._datachange = new Event(EVENTS.DATA_CHANGE);
+    this._selectchange = new Event(EVENTS.SELECT_CHANGE);
 
-    this.dispatcher.addEventListener('dataChange', () => {
+    this.dispatcher.addEventListener(EVENTS.DATA_CHANGE, () => {
       chromeStorage.setItemlist(this._itemList);
       chromeStorage.setIdlist(this._idList);
       console.log('dataChange');
       console.log(this._itemList);
     });
-    this.dispatcher.addEventListener('selectChange', () => {
+    this.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, () => {
       chromeStorage.setLastSelectedId(this._id);
       console.log('selectChange');
       console.log(this.getSelectedItem());
@@ -47,7 +48,7 @@ export class Model {
 
   getSelectedItem = (): IShopItem => {
     return this._id === null
-      ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      ? EMPTY_ITEM
       : this._itemList[this._id];
   }
 

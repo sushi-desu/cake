@@ -1,4 +1,4 @@
-import { IShopItem } from "./item";
+import { IShopItem, EMPTY_ITEM } from "./item";
 
 export const getItemlist = (): Promise<{ [id: string]: IShopItem }> => {
   return new Promise<{ [id: string]: IShopItem }>(resolve => {
@@ -36,15 +36,13 @@ export const setLastSelectedId = (id: string | null): void => {
   chrome.storage.local.set({'lastSelectedId': id})
 }
 
-export const getItem = (): Promise<IShopItem> => {
-  return new Promise<IShopItem>(async resolve => {
-    const id = await getLastSelectedId()
-    const itemlist = await getItemlist()
+export const getItem = async (): Promise<IShopItem> => {
+  const id = await getLastSelectedId()
+  const itemlist = await getItemlist()
 
-    if (itemlist.hasOwnProperty(id)) {
-      resolve(itemlist[id])
-    } else {
-      resolve({id: null, name: '', price: '', weight: '', rakuten_stock: '', makeshop_stock: '', jancode: '', descriptions: [], details: []})
-    }
-  })
+  if (itemlist.hasOwnProperty(id)) {
+    return itemlist[id]
+  } else {
+    return EMPTY_ITEM
+  }
 }
