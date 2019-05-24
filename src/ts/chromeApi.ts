@@ -1,7 +1,7 @@
 import { IShopItem, EMPTY_ITEM } from "./item";
 
 export const getItemlist = (): Promise<{ [id: string]: IShopItem }> => {
-  return new Promise<{ [id: string]: IShopItem }>(resolve => {
+  return new Promise(resolve => {
     chrome.storage.local.get('items', res => {
       resolve(res['items']);
     })
@@ -17,7 +17,7 @@ export const getIdlist = (): Promise<string[]> => {
 }
 
 export const getLastSelectedId = (): Promise<string | null> => {
-  return new Promise<string | null>(resolve => {
+  return new Promise(resolve => {
     chrome.storage.local.get('lastSelectedId', res => {
       resolve(res['lastSelectedId']);
     })
