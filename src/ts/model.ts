@@ -5,7 +5,7 @@ import { EVENTS } from "./constant";
 
 export class Model {
 
-  ready: Promise<any>;
+  ready: Promise<void>;
   private _itemList: { [id: string]: IShopItem };
   private _idList: string[]
   private _id: string | null;
