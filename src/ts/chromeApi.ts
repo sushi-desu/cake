@@ -1,4 +1,5 @@
 import { IShopItem, EMPTY_ITEM } from "./item";
+import { uniqueId } from "./util";
 
 export const getItemlist = (): Promise<{ [id: string]: IShopItem }> => {
   return new Promise(resolve => {
@@ -59,20 +60,54 @@ const clear = (): Promise<void> => {
   })
 }
 
+const combine = (
+  idlist1: string[], items1: { [id: string]: IShopItem },
+  idlist2: string[], items2: { [id: string]: IShopItem }
+) => {
+  const list1 = idlist1.map(id => items1[id])
+  const list2 = idlist2.map(id => items2[id])
+  const newIdlist: string[] = []
+  const newItems: { [id: string]: IShopItem } = {}
+  list1.concat(list2).forEach(item => {
+    const id = uniqueId()
+    newIdlist.push(id)
+    item.id = id
+    newItems[id] = item
+  })
+  return {idlist: newIdlist, items: newItems}
+}
+
 export const updateStorage = async (overwrite: boolean, data: any): Promise<{ success: boolean, message: string }> => {
   if (!(data.hasOwnProperty('items') && data.hasOwnProperty('idlist') && data.hasOwnProperty('lastSelectedId'))) {
     return {success: false, message: 'インポートに失敗しました。対応していないファイルです。'}
   }
 
+  const idlist = data.idlist
+  const items = data.items
+  const lastSelectedId = data.lastSelectedId
   if (overwrite) {
     await clear()
     await Promise.all([
-      setIdlist(data.idlist),
-      setItemlist(data.items),
-      setLastSelectedId(data.lastSelectedId)
+      setIdlist(idlist),
+      setItemlist(items),
+      setLastSelectedId(lastSelectedId)
     ])
     return {success: true, message: "上書きしました。"}
   } else {
+    const preData = await Promise.all([
+      getIdlist(),
+      getItemlist()
+    ])
+    const preIdlist = preData[0]
+    const preItems = preData[1]
+    const combined = combine(preIdlist, preItems, idlist, items)
+
+    await clear()
+    await Promise.all([
+      setIdlist(combined.idlist),
+      setItemlist(combined.items),
+      setLastSelectedId(combined.idlist[0])
+    ])
     return {success: true, message: "追加しました。"}
   }
 }

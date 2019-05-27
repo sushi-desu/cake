@@ -7,6 +7,7 @@ const exportbtn = document.getElementById('export')
 const startbtn = document.getElementById('import_start')
 
 const modal = document.getElementById('import-modal')
+const overwrite = document.getElementById('overwrite') as HTMLInputElement
 const file_input = modal.querySelector('input[name="import_file"]') as HTMLInputElement
 const modalCloses = getAll('.modal-background, .modal-close, .modal-card-foot > .button')
 const html = document.documentElement
@@ -31,7 +32,8 @@ export const setNavbarEventListener = (model: Model) => {
     if (!file_input.files.length) { return }
 
     const result = await importFile(file_input)
-    const response = await updateStorage(true, result)
+    const response = await updateStorage(overwrite.checked, result)
+
     await model.init()
     model.dispatchEvents()
     showImportNotifications(response)
