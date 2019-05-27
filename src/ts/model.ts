@@ -14,12 +14,7 @@ export class Model {
   private _selectchange: Event;
 
   constructor() {
-    this.ready = new Promise(async resolve => {
-      this._itemList = await chromeStorage.getItemlist()
-      this._idList = await chromeStorage.getIdlist()
-      this._id = await chromeStorage.getLastSelectedId()
-      resolve()
-    })
+    this.ready = this.init()
     this.dispatcher = document.createElement('div');
     this._datachange = new Event(EVENTS.DATA_CHANGE);
     this._selectchange = new Event(EVENTS.SELECT_CHANGE);
@@ -39,6 +34,15 @@ export class Model {
     });
   }
 
+  init = async (): Promise<void> => {
+    const promises = [
+      this._itemList = await chromeStorage.getItemlist(),
+      this._idList = await chromeStorage.getIdlist(),
+      this._id = await chromeStorage.getLastSelectedId()
+    ]
+
+    await Promise.all(promises)
+  }
 
   getTitleList = (): { title: string, id: string }[] => {
     return this._idList.map( (id) => ({ title: this._itemList[id].name, id: id }) )

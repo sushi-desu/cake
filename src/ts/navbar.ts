@@ -1,3 +1,4 @@
+import { Model } from './model'
 import { updateStorage } from './chromeApi'
 import { getAll } from './util'
 
@@ -10,7 +11,7 @@ const file_input = modal.querySelector('input[name="import_file"]') as HTMLInput
 const modalCloses = getAll('.modal-background, .modal-close, .modal-card-foot > .button')
 const html = document.documentElement
 
-export const setNavbarEventListener = () => {
+export const setNavbarEventListener = (model: Model) => {
 
   importbtn.addEventListener('click', () => {
     openModal(modal)
@@ -31,6 +32,8 @@ export const setNavbarEventListener = () => {
 
     const result = await importFile(file_input)
     const response = await updateStorage(true, result)
+    await model.init()
+    model.dispatchEvents()
     showImportNotifications(response)
   })
 

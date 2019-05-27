@@ -9,7 +9,7 @@ import { setNavbarEventListener } from "../ts/navbar";
   await model.ready
   setMainEventListener(model);
   setSidebarEventListener(model);
-  setNavbarEventListener()
+  setNavbarEventListener(model)
 
   // initialize
   model.dispatchEvents();
