@@ -1,62 +1,68 @@
-import { Model } from "../ts/model";
-import { IShopItem } from "./item";
-import { empty, isJancode } from "./util";
-import { EVENTS } from "./constant"
+import { Model } from '../ts/model'
+import { IShopItem } from './item'
+import { empty, isJancode } from './util'
+import { EVENTS } from './constant'
 
-const form = document.getElementById('form') as HTMLFormElement;
-const descriptions = document.getElementById('descriptions');
-const details = document.getElementById('details');
-const savebtn = document.getElementById('save') as HTMLButtonElement;
-const newbtn = document.getElementById('new') as HTMLButtonElement;
-const deletebtn = document.getElementById('delete') as HTMLButtonElement;
+const form = document.getElementById('form') as HTMLFormElement
+const descriptions = document.getElementById('descriptions')
+const details = document.getElementById('details')
+const savebtn = document.getElementById('save') as HTMLButtonElement
+const newbtn = document.getElementById('new') as HTMLButtonElement
+const deletebtn = document.getElementById('delete') as HTMLButtonElement
 
 export const setMainEventListener = (model: Model): void => {
-
   model.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, () => {
-    const item = model.getSelectedItem();
-    initForm(item);
-    validation(item.id);
+    const item = model.getSelectedItem()
+    initForm(item)
+    validation(item.id)
   })
 
   form.addEventListener('input', () => {
-    const id = model.getId();
-    validation(id);
-  });
+    const id = model.getId()
+    validation(id)
+  })
 
   savebtn.addEventListener('click', () => {
-    const data = new FormData(form);
-    model.update(data);
-  });
+    const data = new FormData(form)
+    model.update(data)
+  })
 
   newbtn.addEventListener('click', () => {
-    const data = new FormData(form);
-    model.new(data);
-  });
+    const data = new FormData(form)
+    model.new(data)
+  })
 
   deletebtn.addEventListener('click', () => {
-    model.delete();
-  });
+    model.delete()
+  })
 
-  document.querySelector('.descriptions-field button.plus').addEventListener('click', () => {
-    addDescriptionForm();
-  });
+  document
+    .querySelector('.descriptions-field button.plus')
+    .addEventListener('click', () => {
+      addDescriptionForm()
+    })
 
-  document.querySelector('.descriptions-field button.minus').addEventListener('click', () => {
-    removeDescriptionForm();
-  });
+  document
+    .querySelector('.descriptions-field button.minus')
+    .addEventListener('click', () => {
+      removeDescriptionForm()
+    })
 
-  document.querySelector('.details-field button.plus').addEventListener('click', () => {
-    addDetailsForm();
-  });
+  document
+    .querySelector('.details-field button.plus')
+    .addEventListener('click', () => {
+      addDetailsForm()
+    })
 
-  document.querySelector('.details-field button.minus').addEventListener('click', () => {
-    removeDetailsForm();
-  });
-
+  document
+    .querySelector('.details-field button.minus')
+    .addEventListener('click', () => {
+      removeDetailsForm()
+    })
 }
 
 const validation = (id: string | null): void => {
-  const valid = is_validform(form);
+  const valid = is_validform(form)
   const notempty = id !== null
   savebtn_validation(valid, notempty)
   newbtn_validation(valid)
@@ -88,48 +94,52 @@ const deletebtn_validateion = (...flags: boolean[]) => {
 }
 
 const is_validform = (form: HTMLFormElement): boolean => {
-  const janinput = form.jancode as HTMLInputElement;
-  if (janinput.value === "" || isJancode(janinput.value))  {
-    janinput.setCustomValidity('');
+  const janinput = form.jancode as HTMLInputElement
+  if (janinput.value === '' || isJancode(janinput.value)) {
+    janinput.setCustomValidity('')
   } else {
     janinput.setCustomValidity('JANコードが正しくありません')
   }
-  document.querySelector('.help').innerHTML = janinput.validationMessage;
+  document.querySelector('.help').innerHTML = janinput.validationMessage
 
-  return form.checkValidity();
+  return form.checkValidity()
 }
 
 const initForm = (item: IShopItem): void => {
-  empty(descriptions);
-  empty(details);
+  empty(descriptions)
+  empty(details)
 
-  const inputs = form.elements;
-  inputs['name'].value = item.name;
-  inputs['price'].value = item.price;
-  inputs['weight'].value = item.weight;
-  inputs['rakuten_stock'].value = item.rakuten_stock;
-  inputs['makeshop_stock'].value = item.makeshop_stock;
-  inputs['jancode'].value = item.jancode;
+  const inputs = form.elements
+  inputs['name'].value = item.name
+  inputs['price'].value = item.price
+  inputs['weight'].value = item.weight
+  inputs['rakuten_stock'].value = item.rakuten_stock
+  inputs['makeshop_stock'].value = item.makeshop_stock
+  inputs['jancode'].value = item.jancode
 
   item.descriptions.forEach(desc => {
-    const div = addDescriptionForm();
-    const title = div.querySelector('[name="description_title"]') as HTMLInputElement;
-    const body = div.querySelector('[name="description_body"]') as HTMLInputElement;
-    title.value = desc.title;
-    body.value = desc.body;
-  });
+    const div = addDescriptionForm()
+    const title = div.querySelector(
+      '[name="description_title"]'
+    ) as HTMLInputElement
+    const body = div.querySelector(
+      '[name="description_body"]'
+    ) as HTMLInputElement
+    title.value = desc.title
+    body.value = desc.body
+  })
   item.details.forEach(detail => {
-    const div = addDetailsForm();
-    const title = div.querySelector('[name="detail_title"]') as HTMLInputElement;
-    const body = div.querySelector('[name="detail_body"]') as HTMLInputElement;
-    title.value = detail.title;
-    body.value = detail.body;
-  });
+    const div = addDetailsForm()
+    const title = div.querySelector('[name="detail_title"]') as HTMLInputElement
+    const body = div.querySelector('[name="detail_body"]') as HTMLInputElement
+    title.value = detail.title
+    body.value = detail.body
+  })
 }
 
 const addDescriptionForm = () => {
   const div = document.createElement('div')
-  div.classList.add('description', 'field');
+  div.classList.add('description', 'field')
   div.innerHTML = `
       <span class="label">タイトル</span>
       <div class="control">
@@ -138,22 +148,22 @@ const addDescriptionForm = () => {
       <span class="label">本文</span>
       <div class="control">
         <textarea class="textarea" name="description_body"></textarea>
-      </div>`;
+      </div>`
 
-  descriptions.appendChild(div);
-  return div;
+  descriptions.appendChild(div)
+  return div
 }
 
 const removeDescriptionForm = () => {
-  const rows = descriptions.querySelectorAll('.description');
+  const rows = descriptions.querySelectorAll('.description')
   if (rows.length) {
-    descriptions.removeChild(rows[rows.length - 1]);
+    descriptions.removeChild(rows[rows.length - 1])
   }
 }
 
 const addDetailsForm = () => {
-  const div = document.createElement('div');
-  div.classList.add('detail');
+  const div = document.createElement('div')
+  div.classList.add('detail')
   div.innerHTML = `
       <div class="columns is-mobile">
         <div class="column is-one-third">
@@ -168,15 +178,15 @@ const addDetailsForm = () => {
             <input class="input" type="text" name="detail_body">
           </div>
         </div>
-      </div>`;
+      </div>`
 
-  details.appendChild(div);
-  return div;
+  details.appendChild(div)
+  return div
 }
 
 const removeDetailsForm = () => {
-  const rows = details.querySelectorAll('.detail');
+  const rows = details.querySelectorAll('.detail')
   if (rows.length) {
-    details.removeChild(rows[rows.length - 1]);
+    details.removeChild(rows[rows.length - 1])
   }
 }
