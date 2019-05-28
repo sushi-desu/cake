@@ -1,15 +1,16 @@
 import { Model } from "./model";
 import { empty } from "./util";
+import { EVENTS } from "./constant";
 
 const itemlist = document.getElementById('itemlist') as HTMLUListElement;
 
 export const setSidebarEventListener = (model: Model): void => {
 
-  model.dispatcher.addEventListener('dataChange', () => {
+  model.dispatcher.addEventListener(EVENTS.DATA_CHANGE, () => {
     renderItemlist(model.getTitleList());
   });
 
-  model.dispatcher.addEventListener('selectChange', () => {
+  model.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, () => {
     highlightSelectedItem(model.getSelectedItem().id);
   });
 

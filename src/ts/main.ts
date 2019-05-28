@@ -1,6 +1,7 @@
 import { Model } from "../ts/model";
 import { IShopItem } from "./item";
 import { empty, isJancode } from "./util";
+import { EVENTS } from "./constant"
 
 const form = document.getElementById('form') as HTMLFormElement;
 const descriptions = document.getElementById('descriptions');
@@ -11,7 +12,7 @@ const deletebtn = document.getElementById('delete') as HTMLButtonElement;
 
 export const setMainEventListener = (model: Model): void => {
 
-  model.dispatcher.addEventListener('selectChange', () => {
+  model.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, () => {
     const item = model.getSelectedItem();
     initForm(item);
     validation(item.id);

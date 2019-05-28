@@ -1,10 +1,11 @@
 import * as chromeStorage from "./chromeApi";
-import { IShopItem } from "./item";
+import { IShopItem, EMPTY_ITEM } from "./item";
 import { zip, uniqueId } from "./util"
+import { EVENTS } from "./constant";
 
 export class Model {
 
-  ready: Promise<any>;
+  ready: Promise<void>;
   private _itemList: { [id: string]: IShopItem };
   private _idList: string[]
   private _id: string | null;
@@ -13,29 +14,35 @@ export class Model {
   private _selectchange: Event;
 
   constructor() {
-    this.ready = new Promise(async resolve => {
-      this._itemList = await chromeStorage.getItemlist()
-      this._idList = await chromeStorage.getIdlist()
-      this._id = await chromeStorage.getLastSelectedId()
-      resolve()
-    })
+    this.ready = this.init()
     this.dispatcher = document.createElement('div');
-    this._datachange = new Event('dataChange');
-    this._selectchange = new Event('selectChange');
+    this._datachange = new Event(EVENTS.DATA_CHANGE);
+    this._selectchange = new Event(EVENTS.SELECT_CHANGE);
 
-    this.dispatcher.addEventListener('dataChange', () => {
-      chromeStorage.setItemlist(this._itemList);
-      chromeStorage.setIdlist(this._idList);
+    this.dispatcher.addEventListener(EVENTS.DATA_CHANGE, async () => {
+      await Promise.all([
+        chromeStorage.setItemlist(this._itemList),
+        chromeStorage.setIdlist(this._idList)
+      ])
       console.log('dataChange');
       console.log(this._itemList);
     });
-    this.dispatcher.addEventListener('selectChange', () => {
-      chromeStorage.setLastSelectedId(this._id);
+    this.dispatcher.addEventListener(EVENTS.SELECT_CHANGE, async () => {
+      await chromeStorage.setLastSelectedId(this._id);
       console.log('selectChange');
       console.log(this.getSelectedItem());
     });
   }
 
+  init = async (): Promise<void> => {
+    const promises = [
+      this._itemList = await chromeStorage.getItemlist(),
+      this._idList = await chromeStorage.getIdlist(),
+      this._id = await chromeStorage.getLastSelectedId()
+    ]
+
+    await Promise.all(promises)
+  }
 
   getTitleList = (): { title: string, id: string }[] => {
     return this._idList.map( (id) => ({ title: this._itemList[id].name, id: id }) )
@@ -47,7 +54,7 @@ export class Model {
 
   getSelectedItem = (): IShopItem => {
     return this._id === null
-      ? {id: null, name: "", price: "", weight: "", rakuten_stock: "", makeshop_stock: "", jancode: "", descriptions: [{title: "", body: ""}], details: [{title: "", body: ""}]}
+      ? EMPTY_ITEM
       : this._itemList[this._id];
   }
 
