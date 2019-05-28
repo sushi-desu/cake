@@ -1,4 +1,4 @@
 export const EVENTS = {
-  DATA_CHANGE: "dataChange",
-  SELECT_CHANGE: "selectChange"
+  DATA_CHANGE: 'dataChange',
+  SELECT_CHANGE: 'selectChange'
 }

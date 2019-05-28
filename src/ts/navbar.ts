@@ -8,17 +8,20 @@ const startbtn = document.getElementById('import_start')
 
 const modal = document.getElementById('import-modal')
 const overwrite = document.getElementById('overwrite') as HTMLInputElement
-const file_input = modal.querySelector('input[name="import_file"]') as HTMLInputElement
-const modalCloses = getAll('.modal-background, .modal-close, .modal-card-foot > .button')
+const file_input = modal.querySelector(
+  'input[name="import_file"]'
+) as HTMLInputElement
+const modalCloses = getAll(
+  '.modal-background, .modal-close, .modal-card-foot > .button'
+)
 const html = document.documentElement
 
 export const setNavbarEventListener = (model: Model) => {
-
   importbtn.addEventListener('click', () => {
     openModal(modal)
   })
 
-  modalCloses.forEach((element) => {
+  modalCloses.forEach(element => {
     element.addEventListener('click', () => {
       closeModal(modal)
     })
@@ -29,7 +32,9 @@ export const setNavbarEventListener = (model: Model) => {
   })
 
   startbtn.addEventListener('click', async () => {
-    if (!file_input.files.length) { return }
+    if (!file_input.files.length) {
+      return
+    }
 
     const result = await importFile(file_input)
     const response = await updateStorage(overwrite.checked, result)
@@ -40,10 +45,16 @@ export const setNavbarEventListener = (model: Model) => {
   })
 
   exportbtn.addEventListener('click', () => {
-    chrome.storage.local.get(null, (items) => { // null implies all items
-      const url = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(items))
+    chrome.storage.local.get(null, items => {
+      // null implies all items
+      const url =
+        'data:text/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(items))
       const date = new Date(Date.now())
-      const name = `itemlist${date.toISOString().slice(0, 19).replace(/[-,:]/g, '')}.json`
+      const name = `itemlist${date
+        .toISOString()
+        .slice(0, 19)
+        .replace(/[-,:]/g, '')}.json`
       chrome.downloads.download({
         url: url,
         filename: name
@@ -51,7 +62,6 @@ export const setNavbarEventListener = (model: Model) => {
     })
   })
 }
-
 
 const openModal = (target: HTMLElement): void => {
   target.classList.add('is-active')
@@ -68,7 +78,7 @@ const showFileName = (input: HTMLInputElement): void => {
   if (input.files.length !== 0) {
     name.innerText = input.files[0].name
   } else {
-    name.innerText = ""
+    name.innerText = ''
   }
 }
 
@@ -78,7 +88,10 @@ const importFile = async (input: HTMLInputElement) => {
   return result
 }
 
-const showImportNotifications = (response: {success: boolean, message: string}): void => {
+const showImportNotifications = (response: {
+  success: boolean
+  message: string
+}): void => {
   console.log(response)
 }
 
@@ -87,7 +100,7 @@ const read = (file: File) => {
   reader.readAsText(file)
 
   return new Promise<string>(resolve => {
-    reader.onload = (e: ProgressEvent & {target: {result: string}}) => {
+    reader.onload = (e: ProgressEvent & { target: { result: string } }) => {
       resolve(e.target.result)
     }
   })
