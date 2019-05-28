@@ -44,6 +44,13 @@ export const setNavbarEventListener = (model: Model) => {
     showImportNotifications(response)
   })
 
+  document
+    .querySelector('.notification > button.delete')
+    .addEventListener('click', e => {
+      const notification = document.querySelector('.notification')
+      notification.classList.remove('active')
+    })
+
   exportbtn.addEventListener('click', () => {
     chrome.storage.local.get(null, items => {
       // null implies all items
@@ -93,6 +100,10 @@ const showImportNotifications = (response: {
   message: string
 }): void => {
   console.log(response)
+  const notification = document.querySelector('.notification')
+  const text = document.querySelector('.notification > span') as HTMLSpanElement
+  text.innerText = response.message
+  notification.classList.add('active')
 }
 
 const read = (file: File) => {
