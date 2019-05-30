@@ -10,7 +10,7 @@
     "default_title": "Run Cake"
   },
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  "description": "Happy Cake",
+  "description": "商品情報をワンクリックで登録できます。",
   "icons": {
     "128": "icons/128.png",
     "16": "icons/16.png",
