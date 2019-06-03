@@ -9,11 +9,7 @@ export const write_to_makeshop = (item: IShopItem): void => {
   frame.getElementById('reserve_type').selectedIndex = 1
   frame.getElementById('reserve').value = '1'
   // 数量設定
-  frame
-    .querySelector(
-      '#cover > table > tbody > tr > td:nth-child(2) > form > table > tbody > tr:nth-child(3) > td > table:nth-child(8) > tbody > tr:nth-child(13) > td > input[type="radio"]:nth-child(3)'
-    )
-    .click()
+  frame.querySelectorAll('input[type=radio][name=checkquantity]')[2].click()
   // 陳列位置
   frame.querySelector('[name="special"]').selectedIndex = 1
 
